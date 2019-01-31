@@ -27,3 +27,5 @@ https://istio.io/docs/examples/bookinfo/
 Kubernetes concepts 
 
 https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/
+ 
+About pods https://www.youtube.com/watch?v=KpsclNb2nzo
