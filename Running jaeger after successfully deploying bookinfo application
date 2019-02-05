@@ -1,0 +1,506 @@
+Last login: Thu Jan 31 11:50:47 on ttys001
+shivams-mbp:networking shivamshukla$ kubectl get svc -n istio-system
+NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                                                                   AGE
+grafana                  ClusterIP      10.102.234.206   <none>        3000/TCP                                                                                                                  1d
+istio-citadel            ClusterIP      10.104.195.167   <none>        8060/TCP,9093/TCP                                                                                                         1d
+istio-egressgateway      ClusterIP      10.97.187.14     <none>        80/TCP,443/TCP                                                                                                            1d
+istio-galley             ClusterIP      10.101.138.207   <none>        443/TCP,9093/TCP                                                                                                          1d
+istio-ingressgateway     LoadBalancer   10.103.220.204   <pending>     80:31380/TCP,443:31390/TCP,31400:31400/TCP,15011:31764/TCP,8060:31048/TCP,853:30592/TCP,15030:30647/TCP,15031:31735/TCP   1d
+istio-pilot              ClusterIP      10.101.103.195   <none>        15010/TCP,15011/TCP,8080/TCP,9093/TCP                                                                                     1d
+istio-policy             ClusterIP      10.101.69.186    <none>        9091/TCP,15004/TCP,9093/TCP                                                                                               1d
+istio-sidecar-injector   ClusterIP      10.98.147.2      <none>        443/TCP                                                                                                                   1d
+istio-telemetry          ClusterIP      10.101.95.43     <none>        9091/TCP,15004/TCP,9093/TCP,42422/TCP                                                                                     1d
+jaeger-agent             ClusterIP      None             <none>        5775/UDP,6831/UDP,6832/UDP                                                                                                1d
+jaeger-collector         ClusterIP      10.105.159.235   <none>        14267/TCP,14268/TCP                                                                                                       1d
+jaeger-query             ClusterIP      10.103.168.75    <none>        16686/TCP                                                                                                                 1d
+prometheus               ClusterIP      10.105.51.1      <none>        9090/TCP                                                                                                                  1d
+servicegraph             ClusterIP      10.107.6.125     <none>        8088/TCP                                                                                                                  1d
+tracing                  ClusterIP      10.105.60.234    <none>        80/TCP                                                                                                                    1d
+zipkin                   ClusterIP      10.98.30.133     <none>        9411/TCP                                                                                                                  1d
+shivams-mbp:networking shivamshukla$ kubectl expose service jaeger-query --type=NodePort --name=jaeger-query-nodeport --namespace istio-system
+service "jaeger-query-nodeport" exposed
+shivams-mbp:networking shivamshukla$ kubectl get svc -n istio-system
+NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                                                                   AGE
+grafana                  ClusterIP      10.102.234.206   <none>        3000/TCP                                                                                                                  1d
+istio-citadel            ClusterIP      10.104.195.167   <none>        8060/TCP,9093/TCP                                                                                                         1d
+istio-egressgateway      ClusterIP      10.97.187.14     <none>        80/TCP,443/TCP                                                                                                            1d
+istio-galley             ClusterIP      10.101.138.207   <none>        443/TCP,9093/TCP                                                                                                          1d
+istio-ingressgateway     LoadBalancer   10.103.220.204   <pending>     80:31380/TCP,443:31390/TCP,31400:31400/TCP,15011:31764/TCP,8060:31048/TCP,853:30592/TCP,15030:30647/TCP,15031:31735/TCP   1d
+istio-pilot              ClusterIP      10.101.103.195   <none>        15010/TCP,15011/TCP,8080/TCP,9093/TCP                                                                                     1d
+istio-policy             ClusterIP      10.101.69.186    <none>        9091/TCP,15004/TCP,9093/TCP                                                                                               1d
+istio-sidecar-injector   ClusterIP      10.98.147.2      <none>        443/TCP                                                                                                                   1d
+istio-telemetry          ClusterIP      10.101.95.43     <none>        9091/TCP,15004/TCP,9093/TCP,42422/TCP                                                                                     1d
+jaeger-agent             ClusterIP      None             <none>        5775/UDP,6831/UDP,6832/UDP                                                                                                1d
+jaeger-collector         ClusterIP      10.105.159.235   <none>        14267/TCP,14268/TCP                                                                                                       1d
+jaeger-query             ClusterIP      10.103.168.75    <none>        16686/TCP                                                                                                                 1d
+jaeger-query-nodeport    NodePort       10.103.58.157    <none>        16686:32356/TCP                                                                                                           6s
+prometheus               ClusterIP      10.105.51.1      <none>        9090/TCP                                                                                                                  1d
+servicegraph             ClusterIP      10.107.6.125     <none>        8088/TCP                                                                                                                  1d
+tracing                  ClusterIP      10.105.60.234    <none>        80/TCP                                                                                                                    1d
+zipkin                   ClusterIP      10.98.30.133     <none>        9411/TCP                                                                                                                  1d
+shivams-mbp:networking shivamshukla$ kubectl port-forward -n NAMESPACE jaeger-query-nodeport 9.30.146.35:32356
+Error from server (NotFound): namespaces "NAMESPACE" not found
+shivams-mbp:networking shivamshukla$ kubectl port-forward -n istio-system jaeger-query-nodeport 9.30.146.35:32356
+Error from server (NotFound): pods "jaeger-query-nodeport" not found
+shivams-mbp:networking shivamshukla$ kubectl get pods -n istio-system
+NAME                                      READY     STATUS      RESTARTS   AGE
+grafana-59b8896965-z7k7d                  1/1       Running     1          1d
+istio-citadel-856f994c58-s9kq2            1/1       Running     1          1d
+istio-cleanup-secrets-mkhv6               0/1       Completed   0          1d
+istio-egressgateway-54797bd4-srnb9        1/1       Running     1          1d
+istio-galley-7665f65c9c-tl4w4             1/1       Running     3          1d
+istio-grafana-post-install-9tq4l          0/1       Completed   4          1d
+istio-ingressgateway-7768dfb7cf-bm45b     1/1       Running     1          1d
+istio-pilot-5945454d64-vjsh2              2/2       Running     3          1d
+istio-policy-66b4c8b455-4t8kl             2/2       Running     4          1d
+istio-security-post-install-zsl8w         0/1       Completed   4          1d
+istio-sidecar-injector-768c79f7bf-pm9fn   1/1       Running     1          1d
+istio-telemetry-64bbbfbfd7-8c4fs          2/2       Running     5          1d
+istio-tracing-6b994895fd-rd4hj            1/1       Running     2          1d
+prometheus-76b7745b64-hq7nk               1/1       Running     1          1d
+servicegraph-5c4485945b-hr74d             1/1       Running     4          1d
+shivams-mbp:networking shivamshukla$ kubectl port-forward -n istio-system jaeger-query-nodeport 9.30.146.35:32356
+Error from server (NotFound): pods "jaeger-query-nodeport" not found
+shivams-mbp:networking shivamshukla$ kubectl port-forward jaeger-query-nodeport 9.30.146.35:32356 -n istio-system
+Error from server (NotFound): pods "jaeger-query-nodeport" not found
+shivams-mbp:networking shivamshukla$ kubectl port-forward service/jaeger-query-nodeport 9.30.146.35:32356 -n istio-system
+error: Service jaeger-query-nodeport does not have a service port 32356
+shivams-mbp:networking shivamshukla$ kubectl port-forward service/jaeger-query-nodeport 9.30.146.35:16686 -n istio-system
+error: Error parsing local port '9.30.146.35': strconv.ParseUint: parsing "9.30.146.35": invalid syntax
+shivams-mbp:networking shivamshukla$ kubectl port-forward service/jaeger-query-nodeport 80:16686 -n istio-system
+Unable to listen on port 80: All listeners failed to create with the following errors: Unable to create listener: Error listen tcp4 127.0.0.1:80: bind: permission denied, Unable to create listener: Error listen tcp6 [::1]:80: bind: permission denied
+error: Unable to listen on any of the requested ports: [{80 16686}]
+shivams-mbp:networking shivamshukla$ kubectl port-forward service/jaeger-query-nodeport 8080:16686 -n istio-system
+Forwarding from 127.0.0.1:8080 -> 16686
+Forwarding from [::1]:8080 -> 16686
+^Cshivams-mbp:networking shivamshukla$ kubectl port-forward service/jaeger-query-nodeport 16686:16686 -n istio-system
+Forwarding from 127.0.0.1:16686 -> 16686
+Forwarding from [::1]:16686 -> 16686
+^Cshivams-mbp:networking shivamshuklakubectl port-forward service/jaeger-query-nodeport 8081:16686 -n istio-system
+Forwarding from 127.0.0.1:8081 -> 16686
+Forwarding from [::1]:8081 -> 16686
+^Cshivams-mbp:networking shivamshukla$ kubectl port-forward service/jaeger-query-nodeport 8081:32356 -n istio-system
+error: Service jaeger-query-nodeport does not have a service port 32356
+shivams-mbp:networking shivamshukla$ kubectl port-forward service/jaeger-query-nodeport 16686:16686 -n istio-system
+Forwarding from 127.0.0.1:16686 -> 16686
+Forwarding from [::1]:16686 -> 16686
+^Cshivams-mbp:networking shivamshukla$ sudo kubefwd jaeger-query-nodeport -n istio-system
+Password:
+sudo: kubefwd: command not found
+shivams-mbp:networking shivamshukla$ brew 
+Example usage:
+  brew search [TEXT|/REGEX/]
+  brew info [FORMULA...]
+  brew install FORMULA...
+  brew update
+  brew upgrade [FORMULA...]
+  brew uninstall FORMULA...
+  brew list [FORMULA...]
+
+Troubleshooting:
+  brew config
+  brew doctor
+  brew install --verbose --debug FORMULA
+
+Contributing:
+  brew create [URL [--no-fetch]]
+  brew edit [FORMULA...]
+
+Further help:
+  brew commands
+  brew help [COMMAND]
+  man brew
+  https://docs.brew.sh
+shivams-mbp:networking shivamshukla$ brew install txn2/tape/kubefwd
+Updating Homebrew...
+^C==> Tapping txn2/tape
+Cloning into '/usr/local/Homebrew/Library/Taps/txn2/homebrew-tape'...
+^C
+shivams-mbp:networking shivamshukla$ brew install txn2/tape/kubefwd
+Updating Homebrew...
+^C==> Tapping txn2/tape
+Cloning into '/usr/local/Homebrew/Library/Taps/txn2/homebrew-tape'...
+Username for 'https://github.com': shvmshukla  
+Password for 'https://shvmshukla@github.com': 
+remote: Repository not found.
+fatal: repository 'https://github.com/txn2/homebrew-tape/' not found
+Error: Failure while executing; `git clone https://github.com/txn2/homebrew-tape /usr/local/Homebrew/Library/Taps/txn2/homebrew-tape --depth=1` exited with 128.
+shivams-mbp:networking shivamshukla$ brew install kubefwd
+Updating Homebrew...
+^CError: No available formula with the name "kubefwd" 
+==> Searching for a previously deleted formula (in the last month)...
+Warning: homebrew/core is shallow clone. To get complete history run:
+  git -C "$(brew --repo homebrew/core)" fetch --unshallow
+
+Error: No previously deleted formula found.
+==> Searching for similarly named formulae...
+Error: No similarly named formulae found.
+==> Searching taps...
+==> Searching taps on GitHub...
+Error: No formulae found in taps.
+shivams-mbp:networking shivamshukla$ brew install txn2/tap/kubefwd
+Updating Homebrew...
+^C==> Tapping txn2/tap
+Cloning into '/usr/local/Homebrew/Library/Taps/txn2/homebrew-tap'...
+remote: Enumerating objects: 11, done.
+remote: Counting objects: 100% (11/11), done.
+remote: Compressing objects: 100% (10/10), done.
+remote: Total 11 (delta 0), reused 6 (delta 0), pack-reused 0
+Unpacking objects: 100% (11/11), done.
+Tapped 8 formulae (42 files, 30.0KB).
+==> Installing kubefwd from txn2/tap
+==> Downloading https://github.com/txn2/kubefwd/releases/download/1.4.10/kubefwd_macOS_amd64.tar.gz
+==> Downloading from https://github-production-release-asset-2e65be.s3.amazonaws.com/143650971/3dc7e600-f2a0-11e8-8705-652ad4dbeba0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20190131%2Fus-east-1%2Fs3%2Faws4_
+######################################################################## 100.0%
+🍺  /usr/local/Cellar/kubefwd/1.4.10: 4 files, 27.1MB, built in 21 seconds
+shivams-mbp:networking shivamshukla$ kubefwd help svc
+2019/01/31 16:15:29  _          _           __             _
+2019/01/31 16:15:29 | | ___   _| |__   ___ / _|_      ____| |
+2019/01/31 16:15:29 | |/ / | | | '_ \ / _ \ |_\ \ /\ / / _  |
+2019/01/31 16:15:29 |   <| |_| | |_) |  __/  _|\ V  V / (_| |
+2019/01/31 16:15:29 |_|\_\\__,_|_.__/ \___|_|   \_/\_/ \__,_|
+2019/01/31 16:15:29 
+2019/01/31 16:15:29 Version 1.4.10
+2019/01/31 16:15:29 https://github.com/txn2/kubefwd
+2019/01/31 16:15:29 
+Forward multiple Kubernetes services from one or more namespaces. Filter services with selector.
+
+Usage:
+  kubefwd services [flags]
+
+Aliases:
+  services, svcs, svc
+
+Examples:
+  kubefwd svc -n the-project
+  kubefwd svc -n the-project -l app=wx,component=api
+  kubefwd svc -n default -n the-project
+  kubefwd svc -n the-project -x prod-cluster
+
+
+Flags:
+  -x, --context strings     specify a context to override the current context
+      --exitonfailure       Exit(1) on failure. Useful for forcing a container restart.
+  -h, --help                help for services
+  -c, --kubeconfig string   absolute path to a kubectl config file (default "/Users/shivamshukla/.kube/config")
+  -n, --namespace strings   Specify a namespace. Specify multiple namespaces by duplicating this argument.
+  -l, --selector string     Selector (label query) to filter on; supports '=', '==', and '!=' (e.g. -l key1=value1,key2=value2).
+  -v, --verbose             Verbose output.
+shivams-mbp:networking shivamshukla$ kubectl port-forward service/jaeger-query 16686:16686 -n istio-system
+Forwarding from 127.0.0.1:16686 -> 16686
+Forwarding from [::1]:16686 -> 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+E0131 19:03:56.495464    5088 portforward.go:178] lost connection to pod
+shivams-mbp:networking shivamshukla$ 
+  [Restored 01-Feb-2019 at 10:31:37 AM]
+Last login: Fri Feb  1 10:31:37 on ttys002
+shivams-mbp:networking shivamshukla$ kubectl get services -n istio-system
+NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                                                                   AGE
+grafana                  ClusterIP      10.102.234.206   <none>        3000/TCP                                                                                                                  2d
+istio-citadel            ClusterIP      10.104.195.167   <none>        8060/TCP,9093/TCP                                                                                                         2d
+istio-egressgateway      ClusterIP      10.97.187.14     <none>        80/TCP,443/TCP                                                                                                            2d
+istio-galley             ClusterIP      10.101.138.207   <none>        443/TCP,9093/TCP                                                                                                          2d
+istio-ingressgateway     LoadBalancer   10.103.220.204   <pending>     80:31380/TCP,443:31390/TCP,31400:31400/TCP,15011:31764/TCP,8060:31048/TCP,853:30592/TCP,15030:30647/TCP,15031:31735/TCP   2d
+istio-pilot              ClusterIP      10.101.103.195   <none>        15010/TCP,15011/TCP,8080/TCP,9093/TCP                                                                                     2d
+istio-policy             ClusterIP      10.101.69.186    <none>        9091/TCP,15004/TCP,9093/TCP                                                                                               2d
+istio-sidecar-injector   ClusterIP      10.98.147.2      <none>        443/TCP                                                                                                                   2d
+istio-telemetry          ClusterIP      10.101.95.43     <none>        9091/TCP,15004/TCP,9093/TCP,42422/TCP                                                                                     2d
+jaeger-agent             ClusterIP      None             <none>        5775/UDP,6831/UDP,6832/UDP                                                                                                2d
+jaeger-collector         ClusterIP      10.105.159.235   <none>        14267/TCP,14268/TCP                                                                                                       2d
+jaeger-query             ClusterIP      10.103.168.75    <none>        16686/TCP                                                                                                                 2d
+jaeger-query-nodeport    NodePort       10.103.58.157    <none>        16686:32356/TCP                                                                                                           19h
+prometheus               ClusterIP      10.105.51.1      <none>        9090/TCP                                                                                                                  2d
+servicegraph             ClusterIP      10.107.6.125     <none>        8088/TCP                                                                                                                  2d
+tracing                  ClusterIP      10.105.60.234    <none>        80/TCP                                                                                                                    2d
+zipkin                   ClusterIP      10.98.30.133     <none>        9411/TCP                                                                                                                  2d
+shivams-mbp:networking shivamshukla$ minikube service jaeger-query --url
+minikube is not currently running so the service cannot be accessed
+shivams-mbp:networking shivamshukla$ minikube service jaeger-query --10.103.168.75
+Error: unknown flag: --10.103.168.75
+Usage:
+  minikube service [flags] SERVICE
+  minikube service [command]
+
+Available Commands:
+  list        Lists the URLs for the services in your local cluster
+
+Flags:
+      --format string      Format to output service URL in. This format will be applied to each url individually and they will be printed one at a time. (default "http://{{.IP}}:{{.Port}}")
+  -h, --help               help for service
+      --https              Open the service URL with https instead of http
+      --interval int       The time interval for each check that wait performs in seconds (default 20)
+  -n, --namespace string   The service namespace (default "default")
+      --url                Display the kubernetes service URL in the CLI instead of opening it in the default browser
+      --wait int           Amount of time to wait for a service in seconds (default 20)
+
+Global Flags:
+      --alsologtostderr                  log to standard error as well as files
+  -b, --bootstrapper string              The name of the cluster bootstrapper that will set up the kubernetes cluster. (default "kubeadm")
+      --log_backtrace_at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
+      --log_dir string                   If non-empty, write log files in this directory
+      --logtostderr                      log to standard error instead of files
+  -p, --profile string                   The name of the minikube VM being used.  
+                                         	This can be modified to allow for multiple minikube instances to be run independently (default "minikube")
+      --stderrthreshold severity         logs at or above this threshold go to stderr (default 2)
+  -v, --v Level                          log level for V logs
+      --vmodule moduleSpec               comma-separated list of pattern=N settings for file-filtered logging
+
+Use "minikube service [command] --help" for more information about a command.
+
+shivams-mbp:networking shivamshukla$ minikube service jaeger-query 10.103.168.75
+Please specify a service name.
+shivams-mbp:networking shivamshukla$ kubectl port-forward jaeger-query 16686:16686 -n istio-system
+Unable to connect to the server: dial tcp 192.168.99.104:8443: i/o timeout
+shivams-mbp:networking shivamshukla$ minikube ip
+E0204 12:03:10.670231    9419 ip.go:48] Error getting IP:  Host is not running
+shivams-mbp:networking shivamshukla$ minikube start
+Starting local Kubernetes v1.13.2 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Stopping extra container runtimes...
+Machine exists, restarting cluster components...
+Verifying kubelet health ...
+Verifying apiserver health ...
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+
+
+Everything looks great. Please enjoy minikube!
+shivams-mbp:networking shivamshukla$ minikube ip
+192.168.99.104
+shivams-mbp:networking shivamshukla$ kubectl get pods
+NAME                              READY     STATUS    RESTARTS   AGE
+details-v1-57994694dd-blpqd       2/2       Running   6          5d
+productpage-v1-5d4d6f9c98-wlb8q   2/2       Running   6          5d
+ratings-v1-68c44bdc8d-996js       2/2       Running   6          5d
+reviews-v1-85cc695989-sbtqj       2/2       Running   6          5d
+reviews-v2-74d79b74dd-mrtdh       2/2       Running   6          5d
+reviews-v3-665d5bc57f-7jj54       2/2       Running   6          5d
+shivams-mbp:networking shivamshukla$ kubectl get services -n istio-system
+NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                                                                   AGE
+grafana                  ClusterIP      10.102.234.206   <none>        3000/TCP                                                                                                                  5d
+istio-citadel            ClusterIP      10.104.195.167   <none>        8060/TCP,9093/TCP                                                                                                         5d
+istio-egressgateway      ClusterIP      10.97.187.14     <none>        80/TCP,443/TCP                                                                                                            5d
+istio-galley             ClusterIP      10.101.138.207   <none>        443/TCP,9093/TCP                                                                                                          5d
+istio-ingressgateway     LoadBalancer   10.103.220.204   <pending>     80:31380/TCP,443:31390/TCP,31400:31400/TCP,15011:31764/TCP,8060:31048/TCP,853:30592/TCP,15030:30647/TCP,15031:31735/TCP   5d
+istio-pilot              ClusterIP      10.101.103.195   <none>        15010/TCP,15011/TCP,8080/TCP,9093/TCP                                                                                     5d
+istio-policy             ClusterIP      10.101.69.186    <none>        9091/TCP,15004/TCP,9093/TCP                                                                                               5d
+istio-sidecar-injector   ClusterIP      10.98.147.2      <none>        443/TCP                                                                                                                   5d
+istio-telemetry          ClusterIP      10.101.95.43     <none>        9091/TCP,15004/TCP,9093/TCP,42422/TCP                                                                                     5d
+jaeger-agent             ClusterIP      None             <none>        5775/UDP,6831/UDP,6832/UDP                                                                                                5d
+jaeger-collector         ClusterIP      10.105.159.235   <none>        14267/TCP,14268/TCP                                                                                                       5d
+jaeger-query             ClusterIP      10.103.168.75    <none>        16686/TCP                                                                                                                 5d
+jaeger-query-nodeport    NodePort       10.103.58.157    <none>        16686:32356/TCP                                                                                                           3d
+prometheus               ClusterIP      10.105.51.1      <none>        9090/TCP                                                                                                                  5d
+servicegraph             ClusterIP      10.107.6.125     <none>        8088/TCP                                                                                                                  5d
+tracing                  ClusterIP      10.105.60.234    <none>        80/TCP                                                                                                                    5d
+zipkin                   ClusterIP      10.98.30.133     <none>        9411/TCP                                                                                                                  5d
+shivams-mbp:networking shivamshukla$ kubectl port-forward jaeger-query 16686:16686 -n istio-system
+Error from server (NotFound): pods "jaeger-query" not found
+shivams-mbp:networking shivamshukla$ kubectl port-forward jaeger-query 16686:16686 -n istio-systemcd ..
+Error from server (NotFound): namespaces "istio-systemcd" not found
+shivams-mbp:networking shivamshukla$ cd ..
+shivams-mbp:bookinfo shivamshukla$ cd ./.
+shivams-mbp:bookinfo shivamshukla$ cd ..
+shivams-mbp:samples shivamshukla$ cd ..
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl port-forward jaeger-query 16686:16686 -n istio-system
+Error from server (NotFound): pods "jaeger-query" not found
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl port-forward jaeger-query 16686:16686
+Error from server (NotFound): pods "jaeger-query" not found
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl port-forward service/jaeger-query 16686:16686
+Error from server (NotFound): services "jaeger-query" not found
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl port-forward svc/jaeger-query 16686:16686
+Error from server (NotFound): services "jaeger-query" not found
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system
+Forwarding from 127.0.0.1:16686 -> 16686
+Forwarding from [::1]:16686 -> 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+Handling connection for 16686
+^Z
+[1]+  Stopped                 kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+virtualservice.networking.istio.io "productpage" created
+virtualservice.networking.istio.io "reviews" created
+virtualservice.networking.istio.io "ratings" created
+virtualservice.networking.istio.io "details" created
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/networking/destination-rule-all.yaml
+destinationrule.networking.istio.io "productpage" created
+destinationrule.networking.istio.io "reviews" created
+destinationrule.networking.istio.io "ratings" created
+destinationrule.networking.istio.io "details" created
+shivams-mbp:istio-1.0.5 shivamshukla$ minikube ip
+192.168.99.104
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl delete -f samples/bookinfo/networking/destination-rule-all.yaml
+destinationrule.networking.istio.io "productpage" deleted
+destinationrule.networking.istio.io "reviews" deleted
+destinationrule.networking.istio.io "ratings" deleted
+destinationrule.networking.istio.io "details" deleted
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+virtualservice.networking.istio.io "productpage" deleted
+virtualservice.networking.istio.io "reviews" deleted
+virtualservice.networking.istio.io "ratings" deleted
+virtualservice.networking.istio.io "details" deleted
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml -n default
+virtualservice.networking.istio.io "productpage" created
+virtualservice.networking.istio.io "reviews" created
+virtualservice.networking.istio.io "ratings" created
+virtualservice.networking.istio.io "details" created
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl get virtualservices -o yaml
+apiVersion: v1
+items:
+- apiVersion: networking.istio.io/v1alpha3
+  kind: VirtualService
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"annotations":{},"name":"bookinfo","namespace":"default"},"spec":{"gateways":["bookinfo-gateway"],"hosts":["*"],"http":[{"match":[{"uri":{"exact":"/productpage"}},{"uri":{"exact":"/login"}},{"uri":{"exact":"/logout"}},{"uri":{"prefix":"/api/v1/products"}}],"route":[{"destination":{"host":"productpage","port":{"number":9080}}}]}]}}
+    creationTimestamp: 2019-01-30T05:17:53Z
+    generation: 1
+    name: bookinfo
+    namespace: default
+    resourceVersion: "3782"
+    selfLink: /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/bookinfo
+    uid: 6570d8f7-244e-11e9-8474-080027fadadb
+  spec:
+    gateways:
+    - bookinfo-gateway
+    hosts:
+    - '*'
+    http:
+    - match:
+      - uri:
+          exact: /productpage
+      - uri:
+          exact: /login
+      - uri:
+          exact: /logout
+      - uri:
+          prefix: /api/v1/products
+      route:
+      - destination:
+          host: productpage
+          port:
+            number: 9080
+- apiVersion: networking.istio.io/v1alpha3
+  kind: VirtualService
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"annotations":{},"name":"details","namespace":"default"},"spec":{"hosts":["details"],"http":[{"route":[{"destination":{"host":"details","subset":"v1"}}]}]}}
+    creationTimestamp: 2019-02-04T09:06:33Z
+    generation: 1
+    name: details
+    namespace: default
+    resourceVersion: "118205"
+    selfLink: /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/details
+    uid: 2b0ee37e-285c-11e9-a58c-080027fadadb
+  spec:
+    hosts:
+    - details
+    http:
+    - route:
+      - destination:
+          host: details
+          subset: v1
+- apiVersion: networking.istio.io/v1alpha3
+  kind: VirtualService
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"annotations":{},"name":"productpage","namespace":"default"},"spec":{"hosts":["productpage"],"http":[{"route":[{"destination":{"host":"productpage","subset":"v1"}}]}]}}
+    creationTimestamp: 2019-02-04T09:06:33Z
+    generation: 1
+    name: productpage
+    namespace: default
+    resourceVersion: "118202"
+    selfLink: /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/productpage
+    uid: 2b0a1a69-285c-11e9-a58c-080027fadadb
+  spec:
+    hosts:
+    - productpage
+    http:
+    - route:
+      - destination:
+          host: productpage
+          subset: v1
+- apiVersion: networking.istio.io/v1alpha3
+  kind: VirtualService
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"annotations":{},"name":"ratings","namespace":"default"},"spec":{"hosts":["ratings"],"http":[{"route":[{"destination":{"host":"ratings","subset":"v1"}}]}]}}
+    creationTimestamp: 2019-02-04T09:06:33Z
+    generation: 1
+    name: ratings
+    namespace: default
+    resourceVersion: "118204"
+    selfLink: /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/ratings
+    uid: 2b0da986-285c-11e9-a58c-080027fadadb
+  spec:
+    hosts:
+    - ratings
+    http:
+    - route:
+      - destination:
+          host: ratings
+          subset: v1
+- apiVersion: networking.istio.io/v1alpha3
+  kind: VirtualService
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"annotations":{},"name":"reviews","namespace":"default"},"spec":{"hosts":["reviews"],"http":[{"route":[{"destination":{"host":"reviews","subset":"v1"}}]}]}}
+    creationTimestamp: 2019-02-04T09:06:33Z
+    generation: 1
+    name: reviews
+    namespace: default
+    resourceVersion: "118203"
+    selfLink: /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/reviews
+    uid: 2b0c5abe-285c-11e9-a58c-080027fadadb
+  spec:
+    hosts:
+    - reviews
+    http:
+    - route:
+      - destination:
+          host: reviews
+          subset: v1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl get destinationrules -o yaml
+apiVersion: v1
+items: []
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+shivams-mbp:istio-1.0.5 shivamshukla$ kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+virtualservice.networking.istio.io "productpage" deleted
+virtualservice.networking.istio.io "reviews" deleted
+virtualservice.networking.istio.io "ratings" deleted
+virtualservice.networking.istio.io "details" deleted
+shivams-mbp:istio-1.0.5 shivamshukla$ 
