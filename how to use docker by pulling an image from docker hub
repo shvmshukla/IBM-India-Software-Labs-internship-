@@ -1,6 +1,45 @@
 
 step 1: - Pull images (here mysql) using docker from docker hub using docker pull commad [docker pull mysql] 
 link is here { https://hub.docker.com/_/mysql }
+
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ docker pull mysql
+Using default tag: latest
+latest: Pulling from library/mysql
+5e6ec7f28fb7: Pull complete 
+4140e62498e1: Pull complete 
+e7bc612618a0: Pull complete 
+1af808cf1124: Pull complete 
+ff72a74ebb66: Pull complete 
+3a28cb03e3dc: Pull complete 
+2b52dda3bd7d: Pull complete 
+dc89e81122ad: Pull complete 
+ecba98b7a588: Pull complete 
+109b011a27be: Pull complete 
+5f380f98ab52: Pull complete 
+cdda841f5c5c: Pull complete 
+Digest: sha256:048c2c616866c47c8a9fb604548d32ce842be292b56fba3d90fc07e0e143dac4
+Status: Downloaded newer image for mysql:latest
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+-bash: $: command not found
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ docker images
+REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
+mysql                                      latest              71b5c7e10f9b        13 days ago         477MB
+hello-world                                latest              fce289e99eb9        5 weeks ago         1.84kB
+ubuntu                                     latest              1d9c17228a9e        5 weeks ago         86.7MB
+k8s.gcr.io/kube-proxy-amd64                v1.10.11            7387003276ac        2 months ago        98.3MB
+k8s.gcr.io/kube-apiserver-amd64            v1.10.11            e851a7aeb6e8        2 months ago        228MB
+k8s.gcr.io/kube-controller-manager-amd64   v1.10.11            978cfa2028bf        2 months ago        151MB
+k8s.gcr.io/kube-scheduler-amd64            v1.10.11            d2c751d562c6        2 months ago        51.2MB
+docker/kube-compose-controller             v0.4.12             02a45592fbea        4 months ago        27.8MB
+docker/kube-compose-api-server             v0.4.12             0f92c77fa676        4 months ago        41.2MB
+k8s.gcr.io/etcd-amd64                      3.1.12              52920ad46f5b        11 months ago       193MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64     1.14.8              c2ce1ffb51ed        13 months ago       41MB
+k8s.gcr.io/k8s-dns-sidecar-amd64           1.14.8              6f7f2dc7fab5        13 months ago       42.2MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64          1.14.8              80cc5ea4b547        13 months ago       50.5MB
+k8s.gcr.io/pause-amd64                     3.1                 da86e6ba6ca1        13 months ago       742kB
+prakhar1989/static-site                    latest              f01030e1dcf3        3 years ago         134MB
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ docker run --name shivam_sql -e MYSQL_ROOT_PASSWORD=shivam -d mysql:latest
+8c2c1522526df1add7d8abaa5ba1a7f7ca91e5484981920a5940767cf460705c
 ____________________________________________________________________________________________________________________________
 [Stuff to do in Terminal]
 
