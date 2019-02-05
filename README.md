@@ -34,3 +34,7 @@ ________________________________________________________________________________
 How to implement network policy
 
 Calico for Kubernetes https://docs.projectcalico.org/v2.0/getting-started/kubernetes/
+
+____________________________________________________________________________________________________________________________
+
+Single page application(SPA intro) https://qr.ae/TUrKUi
