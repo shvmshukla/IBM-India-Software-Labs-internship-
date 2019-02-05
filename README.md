@@ -29,3 +29,8 @@ Kubernetes concepts
 https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/
  
 About pods https://www.youtube.com/watch?v=KpsclNb2nzo
+
+____________________________________________________________________________________________________________________________
+How to implement network policy
+
+Calico for Kubernetes https://docs.projectcalico.org/v2.0/getting-started/kubernetes/
