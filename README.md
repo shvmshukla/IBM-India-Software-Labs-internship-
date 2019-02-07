@@ -38,3 +38,6 @@ Calico for Kubernetes https://docs.projectcalico.org/v2.0/getting-started/kubern
 ____________________________________________________________________________________________________________________________
 
 Single page application(SPA intro) https://qr.ae/TUrKUi
+____________________________________________________________________________________________________________________________
+
+A/B Testing https://www.optimizely.com/optimization-glossary/ab-testing/
