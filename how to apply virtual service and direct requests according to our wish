@@ -1,0 +1,173 @@
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl apply -f destination-rule-all-mtls.yaml
+destinationrule.networking.istio.io "productpage" created
+destinationrule.networking.istio.io "reviews" created
+destinationrule.networking.istio.io "ratings" created
+destinationrule.networking.istio.io "details" created
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl get virtualservices -n default
+NAME       AGE
+bookinfo   9d
+reviews    21m
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl describe virtualservices reviews
+Name:         reviews
+Namespace:    default
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"annotations":{},"name":"reviews","namespace":"default"},"spec":{"host...
+API Version:  networking.istio.io/v1alpha3
+Kind:         VirtualService
+Metadata:
+  Creation Timestamp:  2019-02-08T09:11:30Z
+  Generation:          2
+  Resource Version:    236991
+  Self Link:           /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/reviews
+  UID:                 85cba0c5-2b81-11e9-8812-080027fadadb
+Spec:
+  Hosts:
+    reviews
+  Http:
+    Route:
+      Destination:
+        Host:    reviews
+        Subset:  v2
+      Weight:    50
+      Destination:
+        Host:    reviews
+        Subset:  v3
+      Weight:    50
+Events:          <none>
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl get meshpolicy
+NAME      AGE
+default   9d
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl describe meshpolicy default
+Name:         default
+Namespace:    
+Labels:       app=istio-security
+              chart=security-1.0.5
+              heritage=Tiller
+              release=istio
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"authentication.istio.io/v1alpha1","kind":"MeshPolicy","metadata":{"annotations":{},"labels":{"app":"istio-security","chart":"security-1....
+API Version:  authentication.istio.io/v1alpha1
+Kind:         MeshPolicy
+Metadata:
+  Creation Timestamp:  2019-01-30T05:09:43Z
+  Generation:          1
+  Resource Version:    3036
+  Self Link:           /apis/authentication.istio.io/v1alpha1/meshpolicies/default
+  UID:                 41220b06-244d-11e9-8474-080027fadadb
+Spec:
+  Peers:
+    Mtls:
+Events:  <none>
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl describe virtualservices reviews
+Name:         reviews
+Namespace:    default
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"networking.istio.io/v1alpha3","kind":"VirtualService","metadata":{"annotations":{},"name":"reviews","namespace":"default"},"spec":{"host...
+API Version:  networking.istio.io/v1alpha3
+Kind:         VirtualService
+Metadata:
+  Creation Timestamp:  2019-02-08T09:11:30Z
+  Generation:          2
+  Resource Version:    236991
+  Self Link:           /apis/networking.istio.io/v1alpha3/namespaces/default/virtualservices/reviews
+  UID:                 85cba0c5-2b81-11e9-8812-080027fadadb
+Spec:
+  Hosts:
+    reviews
+  Http:
+    Route:
+      Destination:
+        Host:    reviews
+        Subset:  v2
+      Weight:    50
+      Destination:
+        Host:    reviews
+        Subset:  v3
+      Weight:    50
+Events:          <none>
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl get meshpolicy
+NAME      AGE
+default   9d
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl describe meshpolicy
+Name:         default
+Namespace:    
+Labels:       app=istio-security
+              chart=security-1.0.5
+              heritage=Tiller
+              release=istio
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"authentication.istio.io/v1alpha1","kind":"MeshPolicy","metadata":{"annotations":{},"labels":{"app":"istio-security","chart":"security-1....
+API Version:  authentication.istio.io/v1alpha1
+Kind:         MeshPolicy
+Metadata:
+  Creation Timestamp:  2019-01-30T05:09:43Z
+  Generation:          1
+  Resource Version:    3036
+  Self Link:           /apis/authentication.istio.io/v1alpha1/meshpolicies/default
+  UID:                 41220b06-244d-11e9-8474-080027fadadb
+Spec:
+  Peers:
+    Mtls:
+Events:  <none>
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl get policies.authentication.istio.io --all-namespaces
+NAMESPACE      NAME                          AGE
+istio-system   grafana-ports-mtls-disabled   9d
+
+
+#second day (resume)
+__________________________________________________________________
+Shivams-MacBook-Pro:networking shivamshukla$ minikube start
+Starting local Kubernetes v1.13.2 cluster...
+Starting VM...
+Getting VM IP address...
+Moving files into cluster...
+Setting up certs...
+Connecting to cluster...
+Setting up kubeconfig...
+Stopping extra container runtimes...
+Machine exists, restarting cluster components...
+Verifying kubelet health ...
+Verifying apiserver health ....
+Kubectl is now configured to use the cluster.
+Loading cached images from config file.
+
+
+Everything looks great. Please enjoy minikube!
+Shivams-MacBook-Pro:networking shivamshukla$ minikube ip
+192.168.99.105
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl get pods
+NAME                              READY     STATUS    RESTARTS   AGE
+details-v1-57994694dd-blpqd       2/2       Running   14         11d
+productpage-v1-5d4d6f9c98-wlb8q   2/2       Running   14         11d
+ratings-v1-68c44bdc8d-996js       2/2       Running   14         11d
+reviews-v1-85cc695989-sbtqj       2/2       Running   14         11d
+reviews-v2-74d79b74dd-mrtdh       2/2       Running   14         11d
+reviews-v3-665d5bc57f-7jj54       2/2       Running   14         11d
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl get gateway
+NAME               AGE
+bookinfo-gateway   11d
+Shivams-MacBook-Pro:networking shivamshukla$ export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+Shivams-MacBook-Pro:networking shivamshukla$ export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+Shivams-MacBook-Pro:networking shivamshukla$ export INGRESS_HOST=$(minikube ip)
+Shivams-MacBook-Pro:networking shivamshukla$ curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+200
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl apply -f virtual-service-reviews-test-v2.yaml
+virtualservice.networking.istio.io "reviews" configured
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl apply -f virtual-service-reviews-test-v1.yaml
+error: the path "virtual-service-reviews-test-v1.yaml" does not exist
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl apply -f virtual-service-reviews-test-v3.yaml
+error: the path "virtual-service-reviews-test-v3.yaml" does not exist
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl get meshpolicy
+NAME      AGE
+default   11d
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl delete -f virtual-service-reviews-v2.yaml
+error: the path "virtual-service-reviews-v2.yaml" does not exist
+Shivams-MacBook-Pro:networking shivamshukla$ ls
+ROUTING_RULE_MIGRATION.md			destination-rule-reviews.yaml			virtual-service-ratings-mysql.yaml		virtual-service-reviews-jason-v2-v3.yaml
+bookinfo-gateway.yaml				egress-rule-google-apis.yaml			virtual-service-ratings-test-abort.yaml		virtual-service-reviews-test-v2.yaml
+certmanager-gateway.yaml			virtual-service-all-v1.yaml			virtual-service-ratings-test-delay.yaml		virtual-service-reviews-v2-v3.yaml
+dest-rule-v3.yaml				virtual-service-details-v2.yaml			virtual-service-reviews-50-v3.yaml		virtual-service-reviews-v3.yaml
+destination-rule-all-mtls.yaml			virtual-service-ratings-db.yaml			virtual-service-reviews-80-20.yaml
+destination-rule-all.yaml			virtual-service-ratings-mysql-vm.yaml		virtual-service-reviews-90-10.yaml
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl apply -f virtual-service-reviews-v3.yaml
+virtualservice.networking.istio.io "reviews" configured
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl delete -f virtual-service-reviews-v3.yaml
+virtualservice.networking.istio.io "reviews" deleted
