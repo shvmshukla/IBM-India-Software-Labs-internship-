@@ -41,3 +41,13 @@ Single page application(SPA intro) https://qr.ae/TUrKUi
 ____________________________________________________________________________________________________________________________
 
 A/B Testing https://www.optimizely.com/optimization-glossary/ab-testing/
+____________________________________________________________________________________________________________________________
+
+Canary Deployment - is the process of rolling out a new version of an application to a small set of users, as a step to verify the absence of issues, and then with a higher assurance of quality release to the wider audience.
+
+Let’s continue with the same buggy subset of sa-logic to demonstrate canary deployments, by boldly sending 20% of the users to the buggy version (this represents the canary deployment) and 80% to the healthy service by applying the VirtualService below:
+
+VirtualServices enable Canary Deployments and with this method, we reduced potential damages to 20% of our user base.
+_____________________________________________________________________________________________________________________________
+
+
