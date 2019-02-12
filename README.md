@@ -50,4 +50,4 @@ Let’s continue with the same buggy subset of sa-logic to demonstrate canary de
 VirtualServices enable Canary Deployments and with this method, we reduced potential damages to 20% of our user base.
 _____________________________________________________________________________________________________________________________
 
-
+ISTIO https://istio.io/docs/concepts/what-is-istio/
