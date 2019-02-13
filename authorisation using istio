@@ -1,0 +1,32 @@
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/platform/kube/rbac/rbac-config-ON.yaml
+rbacconfig.rbac.istio.io "default" created
+[at this point everything get blocked]
+_____________________________________________________________________________________________________________________________
+
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/platform/kube/rbac/namespace-policy.yaml
+servicerole.rbac.istio.io "service-viewer" created
+servicerolebinding.rbac.istio.io "bind-service-viewer" created
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl get pods
+NAME                              READY     STATUS    RESTARTS   AGE
+details-v1-68c7c8666d-7bm9k       2/2       Running   0          1h
+productpage-v1-79f974c98f-pw44h   2/2       Running   0          4m
+ratings-v1-8558d4458d-8wjgx       2/2       Running   0          1h
+reviews-v1-cb8655c75-rp59c        2/2       Running   0          1h
+reviews-v2-bbc8996-pk7nj          2/2       Running   0          4m
+reviews-v3-7994fc5cc7-wngmj       2/2       Running   0          4m
+
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl delete -f samples/bookinfo/platform/kube/rbac/namespace-policy.yaml
+servicerole.rbac.istio.io "service-viewer" deleted
+servicerolebinding.rbac.istio.io "bind-service-viewer" deleted
+____________________________________________________________________________________________________________________________
+[now giving permission one by one]
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/platform/kube/rbac/productpage-policy.yaml
+servicerole.rbac.istio.io "productpage-viewer" created
+servicerolebinding.rbac.istio.io "bind-productpage-viewer" created
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/platform/kube/rbac/details-reviews-policy.yaml
+servicerole.rbac.istio.io "details-reviews-viewer" created
+servicerolebinding.rbac.istio.io "bind-details-reviews" created
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/platform/kube/rbac/ratings-policy.yaml
+servicerole.rbac.istio.io "ratings-viewer" created
+servicerolebinding.rbac.istio.io "bind-ratings" created
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ 
