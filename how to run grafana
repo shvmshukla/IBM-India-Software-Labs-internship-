@@ -1,0 +1,10 @@
+
+Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl port-forward service/grafana 3000:3000 -n istio-system
+Forwarding from 127.0.0.1:3000 -> 3000
+Forwarding from [::1]:3000 -> 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+Handling connection for 3000
+
