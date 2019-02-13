@@ -52,4 +52,4 @@ ________________________________________________________________________________
 
 ISTIO https://istio.io/docs/concepts/what-is-istio/
 
-authentication using istio https://istio.io/docs/concepts/security/
+authorisation using istio https://istio.io/docs/concepts/security/
