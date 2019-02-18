@@ -1,0 +1,25 @@
+
+#A/B TESTING
+
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl apply -f destination-rule-all-mtls.yaml
+destinationrule.networking.istio.io "productpage" created
+destinationrule.networking.istio.io "reviews" created
+destinationrule.networking.istio.io "ratings" created
+destinationrule.networking.istio.io "details" created
+Shivams-MacBook-Pro:networking shivamshukla$ vi virtual-service-reviews-v2-v3.yaml
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl apply -f virtual-service-reviews-v2-v3.yaml
+virtualservice.networking.istio.io "reviews" configured
+_______________________________________________________________________________________________________________________________
+
+#CANARY DEPLOYMENT
+
+Shivams-MacBook-Pro:networking shivamshukla$ ls
+ROUTING_RULE_MIGRATION.md			destination-rule-reviews.yaml			virtual-service-ratings-mysql.yaml		virtual-service-reviews-jason-v2-v3.yaml
+bookinfo-gateway.yaml				egress-rule-google-apis.yaml			virtual-service-ratings-test-abort.yaml		virtual-service-reviews-test-v2.yaml
+certmanager-gateway.yaml			virtual-service-all-v1.yaml			virtual-service-ratings-test-delay.yaml		virtual-service-reviews-v2-v3.yaml
+dest-rule-v3.yaml				virtual-service-details-v2.yaml			virtual-service-reviews-50-v3.yaml		virtual-service-reviews-v3.yaml
+destination-rule-all-mtls.yaml			virtual-service-ratings-db.yaml			virtual-service-reviews-80-20.yaml
+destination-rule-all.yaml			virtual-service-ratings-mysql-vm.yaml		virtual-service-reviews-90-10.yaml
+Shivams-MacBook-Pro:networking shivamshukla$ vi virtual-service-reviews-80-20.yaml
+Shivams-MacBook-Pro:networking shivamshukla$ kubectl apply -f virtual-service-reviews-80-20.yaml
+virtualservice.networking.istio.io "reviews" created
