@@ -1,3 +1,5 @@
+kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml)
+____________________________________________________________________________________________________________________________
 Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/platform/kube/rbac/rbac-config-ON.yaml
 rbacconfig.rbac.istio.io "default" created
 [at this point everything get blocked]
