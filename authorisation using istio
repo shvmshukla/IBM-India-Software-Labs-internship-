@@ -1,4 +1,12 @@
 kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml)
+
+kubectl delete authorization requestcontext -n istio-system
+kubectl delete rbac handler -n istio-system
+kubectl delete rule rbaccheck -n istio-system
+
+kubectl delete servicerole --all
+kubectl delete servicerolebinding --all
+
 ____________________________________________________________________________________________________________________________
 Shivams-MacBook-Pro:istio-1.0.5 shivamshukla$ kubectl apply -f samples/bookinfo/platform/kube/rbac/rbac-config-ON.yaml
 rbacconfig.rbac.istio.io "default" created
