@@ -60,6 +60,7 @@ authorisation using istio https://istio.io/docs/concepts/security/
 ______________________________________________________________________________________________________________________________
 ______________________________________________________________________________________________________________________________
 InterServiceCommunication 
+
 1)https://medium.com/@walkingtreetech/inter-service-communication-in-microservices-c54f41678998
 
 2)https://devopedia.org/inter-service-communication-for-microservices
