@@ -64,3 +64,7 @@ InterServiceCommunication
 1)https://medium.com/@walkingtreetech/inter-service-communication-in-microservices-c54f41678998
 
 2)https://devopedia.org/inter-service-communication-for-microservices
+______________________________________________________________________________________________________________________________
+
+publish/subscribe model https://qr.ae/TW7ZDn
+
