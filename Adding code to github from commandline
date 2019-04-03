@@ -1,0 +1,156 @@
+STEP1 : GIT CLONE 
+_______________________________________________________________________________________________________________________________
+Last login: Mon Apr  1 16:07:00 on ttys002
+Shivams-MacBook-Pro:PublisherService shivamshukla$ cd Desktop
+-bash: cd: Desktop: No such file or directory
+Shivams-MacBook-Pro:PublisherService shivamshukla$ ls
+README.md		dockerfile		dockerfilebackup	lib			pom.xml			src			target
+Shivams-MacBook-Pro:PublisherService shivamshukla$ cd ..
+Shivams-MacBook-Pro:microservice shivamshukla$ cd ..
+Shivams-MacBook-Pro:Documents shivamshukla$ cd ..
+Shivams-MacBook-Pro:~ shivamshukla$ ls
+Applications			Downloads			Music				VirtualBox VMs			istio-1.0.6
+Desktop				Library				Pictures			eclipse-workspace		sample.microservices.web-app
+Documents			Movies				Public				git
+Shivams-MacBook-Pro:~ shivamshukla$ cd Desktop
+Shivams-MacBook-Pro:Desktop shivamshukla$ ls
+A:B testing.png					Screen Shot 2019-02-12 at 2.23.49 PM.png	Screen Shot 2019-03-27 at 11.55.10 PM.png	simulated annealing 1.png
+DARTBundle_0226_2029.zip			Screen Shot 2019-02-25 at 12.33.07 PM.png	Screen Shot 2019-03-27 at 11.55.49 PM.png	simulated annealing 2.png
+Inter-Service-Communication-Using-RabbitMQ	Screen Shot 2019-02-25 at 12.35.33 PM.png	canary deployment 80-20 testing.png		tomcat
+Publisher_Subscriber_with_rabbitmq_broker	Screen Shot 2019-03-09 at 8.18.01 PM.png	dockerfile
+Screen Shot 2019-02-12 at 2.12.58 PM.png	Screen Shot 2019-03-26 at 2.19.52 PM.png	microservice-starter-jetty
+Screen Shot 2019-02-12 at 2.13.07 PM.png	Screen Shot 2019-03-27 at 11.55.00 PM.png	microservice-starter-jetty.zip
+Shivams-MacBook-Pro:Desktop shivamshukla$ git clone https://github.com/shvmshukla/Publisher-and-Subscriber-services-with-rabbitmq-broker.git
+Cloning into 'Publisher-and-Subscriber-services-with-rabbitmq-broker'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+_______________________________________________________________________________________________________________________________
+STEP2 : Now add things to cloned folder followed by commiting and pushing them
+_______________________________________________________________________________________________________________________________
+Shivams-MacBook-Pro:Publisher-and-Subscriber-services-with-rabbitmq-broker shivamshukla$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.DS_Store
+	PublisherService/
+	receiver/
+
+nothing added to commit but untracked files present (use "git add" to track)
+Shivams-MacBook-Pro:Publisher-and-Subscriber-services-with-rabbitmq-broker shivamshukla$ git add .
+Shivams-MacBook-Pro:Publisher-and-Subscriber-services-with-rabbitmq-broker shivamshukla$ git commit -m "publisher and subscriber services added"
+[master 8e10c8c] publisher and subscriber services added
+ Committer: Shivam Shukla <shivamshukla@Shivams-MacBook-Pro.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 77 files changed, 3009 insertions(+)
+ create mode 100644 .DS_Store
+ create mode 100644 PublisherService/.DS_Store
+ create mode 100755 PublisherService/.gitignore
+ create mode 100755 PublisherService/README.md
+ create mode 100644 PublisherService/dockerfile
+ create mode 100644 PublisherService/dockerfilebackup
+ create mode 100644 PublisherService/lib/LICENSE
+ create mode 100644 PublisherService/lib/LICENSE-APACHE2
+ create mode 100644 PublisherService/lib/LICENSE-GPL2
+ create mode 100644 PublisherService/lib/LICENSE-MPL-RabbitMQ
+ create mode 100644 PublisherService/lib/commons-cli-1.1.jar
+ create mode 100644 PublisherService/lib/commons-io-1.2.jar
+ create mode 100644 PublisherService/lib/junit.jar
+ create mode 100644 PublisherService/lib/rabbitmq-client-tests.jar
+ create mode 100644 PublisherService/lib/rabbitmq-client.jar
+ create mode 100644 PublisherService/lib/runjava.bat
+ create mode 100755 PublisherService/lib/runjava.sh
+ create mode 100755 PublisherService/lib/runperftest.sh
+ create mode 100755 PublisherService/lib/stresspersister.sh
+ create mode 100755 PublisherService/pom.xml
+ create mode 100644 PublisherService/src/.DS_Store
+ create mode 100644 PublisherService/src/main/.DS_Store
+ create mode 100644 PublisherService/src/main/java/.DS_Store
+ create mode 100644 PublisherService/src/main/java/com/.DS_Store
+ create mode 100644 PublisherService/src/main/java/com/ibm/.DS_Store
+ create mode 100644 PublisherService/src/main/java/com/ibm/mdm/.DS_Store
+ create mode 100644 PublisherService/src/main/java/com/ibm/mdm/sample/.DS_Store
+ create mode 100644 PublisherService/src/main/java/com/ibm/mdm/sample/rest/Publisher.java
+ create mode 100644 PublisherService/src/main/java/com/ibm/mdm/sample/rest/RestServer.java
+ create mode 100755 PublisherService/src/main/java/rnd/web/service/rest/App.java
+ create mode 100644 PublisherService/src/test/.DS_Store
+ create mode 100644 PublisherService/src/test/java/RestServerTest.java
+ create mode 100644 receiver/.DS_Store
+ create mode 100644 receiver/.classpath
+ create mode 100644 receiver/.project
+ create mode 100644 receiver/.settings/org.eclipse.core.resources.prefs
+ create mode 100644 receiver/.settings/org.eclipse.jdt.core.prefs
+ create mode 100644 receiver/.settings/org.eclipse.m2e.core.prefs
+ create mode 100644 receiver/dockerfile
+ create mode 100644 receiver/lib/LICENSE
+ create mode 100644 receiver/lib/LICENSE-APACHE2
+ create mode 100644 receiver/lib/LICENSE-GPL2
+ create mode 100644 receiver/lib/LICENSE-MPL-RabbitMQ
+ create mode 100644 receiver/lib/commons-cli-1.1.jar
+ create mode 100644 receiver/lib/commons-io-1.2.jar
+ create mode 100644 receiver/lib/junit.jar
+ create mode 100644 receiver/lib/rabbitmq-client-tests.jar
+ create mode 100644 receiver/lib/rabbitmq-client.jar
+ create mode 100644 receiver/lib/runjava.bat
+ create mode 100755 receiver/lib/runjava.sh
+ create mode 100755 receiver/lib/runperftest.sh
+ create mode 100755 receiver/lib/stresspersister.sh
+ create mode 100644 receiver/pom.xml
+ create mode 100644 receiver/src/.DS_Store
+ create mode 100644 receiver/src/main/.DS_Store
+ create mode 100644 receiver/src/main/java/.DS_Store
+ create mode 100644 receiver/src/main/java/com/.DS_Store
+ create mode 100644 receiver/src/main/java/com/queue/.DS_Store
+ create mode 100644 receiver/src/main/java/com/queue/receiver/App.java
+ create mode 100644 receiver/src/main/java/com/queue/receiver/Receiver.java
+ create mode 100644 receiver/src/test/java/com/queue/receiver/AppTest.java
+ create mode 100644 receiver/target/classes/META-INF/MANIFEST.MF
+ create mode 100644 receiver/target/classes/META-INF/maven/com.queue/receiver/pom.properties
+ create mode 100644 receiver/target/classes/META-INF/maven/com.queue/receiver/pom.xml
+ create mode 100644 receiver/target/classes/com/queue/receiver/App.class
+ create mode 100644 receiver/target/classes/com/queue/receiver/Receiver$1.class
+ create mode 100644 receiver/target/classes/com/queue/receiver/Receiver.class
+ create mode 100644 receiver/target/maven-archiver/pom.properties
+ create mode 100644 receiver/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+ create mode 100644 receiver/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+ create mode 100644 receiver/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+ create mode 100644 receiver/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+ create mode 100644 receiver/target/receiver-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+ create mode 100644 receiver/target/receiver-0.0.1-SNAPSHOT.jar
+ create mode 100644 receiver/target/surefire-reports/TEST-com.queue.receiver.AppTest.xml
+ create mode 100644 receiver/target/surefire-reports/com.queue.receiver.AppTest.txt
+ create mode 100644 receiver/target/test-classes/com/queue/receiver/AppTest.class
+Shivams-MacBook-Pro:Publisher-and-Subscriber-services-with-rabbitmq-broker shivamshukla$ git push
+Username for 'https://github.com': shvmshukla37
+Password for 'https://shvmshukla37@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/shvmshukla/Publisher-and-Subscriber-services-with-rabbitmq-broker.git/'
+Shivams-MacBook-Pro:Publisher-and-Subscriber-services-with-rabbitmq-broker shivamshukla$ git push
+shvmsUsername for 'https://github.com': hukla37@gmail.com
+Password for 'https://shvmshukla37@gmail.com@github.com': 
+Counting objects: 114, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (90/90), done.
+Writing objects: 100% (114/114), 1.53 MiB | 2.23 MiB/s, done.
+Total 114 (delta 16), reused 0 (delta 0)
+remote: Resolving deltas: 100% (16/16), done.
+To https://github.com/shvmshukla/Publisher-and-Subscriber-services-with-rabbitmq-broker.git
+   1d54892..8e10c8c  master -> master
+Shivams-MacBook-Pro:Publisher-and-Subscriber-services-with-rabbitmq-broker shivamshukla$ 
+______________________________________________________________________________________________________________________________
