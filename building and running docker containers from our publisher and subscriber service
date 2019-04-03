@@ -1,0 +1,906 @@
+Last login: Wed Mar 27 23:43:34 on ttys001
+Shivams-MacBook-Pro:~ shivamshukla$ cd Desktop
+Shivams-MacBook-Pro:Desktop shivamshukla$ cd ..
+Shivams-MacBook-Pro:~ shivamshukla$ cd Documents
+Shivams-MacBook-Pro:Documents shivamshukla$ ls
+WS			WebEx			eclipse projects
+Shivams-MacBook-Pro:Documents shivamshukla$ cd WS
+Shivams-MacBook-Pro:WS shivamshukla$ ls
+message		rabbitmq	receiver	send
+Shivams-MacBook-Pro:WS shivamshukla$ cd rabbitmq
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ ls
+dockerfile	lib		pom.xml		src		target
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ docker build -t rabbitpublish
+"docker build" requires exactly 1 argument.
+See 'docker build --help'.
+
+Usage:  docker build [OPTIONS] PATH | URL | -
+
+Build an image from a Dockerfile
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ docker build -t rabbitpublish .
+Sending build context to Docker daemon  1.282MB
+Step 1/4 : FROM openjdk:8-alpine
+8-alpine: Pulling from library/openjdk
+8e402f1a9c57: Pull complete 
+4866c822999c: Pull complete 
+0b0a34324bda: Pull complete 
+5da56be406b8: Pull complete 
+Digest: sha256:9209ebd07f09f2e0f0e8da0884573d852b2fccb05d176852aea94923aaeffbfe
+Status: Downloaded newer image for openjdk:8-alpine
+ ---> 6eb8392704ff
+Step 2/4 : EXPOSE 9898
+ ---> Running in a3e69a848ec1
+Removing intermediate container a3e69a848ec1
+ ---> 7355dc89eea0
+Step 3/4 : ADD /target/rabbitmq-0.0.1-SNAPSHOT.jar rabbitmq-0.0.1-SNAPSHOT.jar
+ ---> 2c065c614205
+Step 4/4 : CMD ["java","-jar","rabbitmq-0.0.1-SNAPSHOT.jar"]
+ ---> Running in 10ae5f6df168
+Removing intermediate container 10ae5f6df168
+ ---> c7bc04bad683
+Successfully built c7bc04bad683
+Successfully tagged rabbitpublish:latest
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ docker images
+REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
+rabbitpublish                              latest              c7bc04bad683        10 seconds ago      105MB
+openjdk                                    8-alpine            6eb8392704ff        4 days ago          105MB
+mysql/mysql-server                         latest              18c55bf778f5        8 weeks ago         288MB
+mysql                                      latest              71b5c7e10f9b        2 months ago        477MB
+hello-world                                latest              fce289e99eb9        3 months ago        1.84kB
+ubuntu                                     latest              1d9c17228a9e        3 months ago        86.7MB
+k8s.gcr.io/kube-proxy-amd64                v1.10.11            7387003276ac        4 months ago        98.3MB
+k8s.gcr.io/kube-apiserver-amd64            v1.10.11            e851a7aeb6e8        4 months ago        228MB
+k8s.gcr.io/kube-controller-manager-amd64   v1.10.11            978cfa2028bf        4 months ago        151MB
+k8s.gcr.io/kube-scheduler-amd64            v1.10.11            d2c751d562c6        4 months ago        51.2MB
+docker/kube-compose-controller             v0.4.12             02a45592fbea        6 months ago        27.8MB
+docker/kube-compose-api-server             v0.4.12             0f92c77fa676        6 months ago        41.2MB
+k8s.gcr.io/etcd-amd64                      3.1.12              52920ad46f5b        12 months ago       193MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64     1.14.8              c2ce1ffb51ed        15 months ago       41MB
+k8s.gcr.io/k8s-dns-sidecar-amd64           1.14.8              6f7f2dc7fab5        15 months ago       42.2MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64          1.14.8              80cc5ea4b547        15 months ago       50.5MB
+k8s.gcr.io/pause-amd64                     3.1                 da86e6ba6ca1        15 months ago       742kB
+prakhar1989/static-site                    latest              f01030e1dcf3        3 years ago         134MB
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ docker run -it rabbitpublish
+no main manifest attribute, in rabbitmq-0.0.1-SNAPSHOT.jar
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ pwd
+/Users/shivamshukla/Documents/WS/rabbitmq
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ ls
+dockerfile	lib		pom.xml		src		target
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ cd target
+Shivams-MacBook-Pro:target shivamshukla$ ls
+archive-tmp						rabbitmq-0.0.1-SNAPSHOT
+classes							rabbitmq-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+generated-sources					rabbitmq-0.0.1-SNAPSHOT.jar
+generated-test-sources					surefire-reports
+maven-archiver						test-classes
+maven-status
+Shivams-MacBook-Pro:target shivamshukla$ java -jar rabbitmq-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+Hello World!
+Shivams-MacBook-Pro:target shivamshukla$ pwd
+/Users/shivamshukla/Documents/WS/rabbitmq/target
+Shivams-MacBook-Pro:target shivamshukla$ cd ..
+Shivams-MacBook-Pro:rabbitmq shivamshukla$ cd ..
+Shivams-MacBook-Pro:WS shivamshukla$ ls
+message		rabbitmq	receiver	send
+Shivams-MacBook-Pro:WS shivamshukla$ cd receiver
+Shivams-MacBook-Pro:receiver shivamshukla$ docker build -t rabbitsubscribe .
+Sending build context to Docker daemon  1.893MB
+Step 1/4 : FROM maven:3.3.9-jdk-8
+3.3.9-jdk-8: Pulling from library/maven
+6d827a3ef358: Pull complete 
+2726297beaf1: Pull complete 
+7d27bd3d7fec: Pull complete 
+e61641c845ed: Pull complete 
+cce4cca5b76b: Pull complete 
+6826227500b0: Pull complete 
+c03b117ffd91: Pull complete 
+821a1547b435: Pull complete 
+2bd47f6b1b42: Pull complete 
+e4cf3e9f705c: Pull complete 
+3733107c5c01: Pull complete 
+Digest: sha256:18e8bd367c73c93e29d62571ee235e106b18bf6718aeb235c7a07840328bba71
+Status: Downloaded newer image for maven:3.3.9-jdk-8
+ ---> 9997d8483b2f
+Step 2/4 : EXPOSE 9999
+ ---> Running in 9ae1d26a7096
+Removing intermediate container 9ae1d26a7096
+ ---> 5ad1958f96ba
+Step 3/4 : ADD /target/microservice-starter-jetty-1.0.0-jar-with-dependencies.jar microservice-starter-jetty-1.0.0-jar-with-dependencies.jar
+ADD failed: stat /var/lib/docker/tmp/docker-builder239855164/target/microservice-starter-jetty-1.0.0-jar-with-dependencies.jar: no such file or directory
+Shivams-MacBook-Pro:receiver shivamshukla$ docker build -t rabbitsubscribe .
+Sending build context to Docker daemon  1.893MB
+Step 1/4 : FROM maven:3.3.9-jdk-8
+ ---> 9997d8483b2f
+Step 2/4 : EXPOSE 9999
+ ---> Using cache
+ ---> 5ad1958f96ba
+Step 3/4 : ADD /target/receiver-0.0.1-SNAPSHOT.jar receiver-0.0.1-SNAPSHOT.jar
+ ---> 97fba93a4e01
+Step 4/4 : CMD ["java","-jar","receiver-0.0.1-SNAPSHOT.jar"]
+ ---> Running in 71aaf004629a
+Removing intermediate container 71aaf004629a
+ ---> a1e17c4da406
+Successfully built a1e17c4da406
+Successfully tagged rabbitsubscribe:latest
+Shivams-MacBook-Pro:receiver shivamshukla$ docker images
+REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
+rabbitsubscribe                            latest              a1e17c4da406        6 seconds ago       653MB
+rabbitpublish                              latest              c7bc04bad683        18 minutes ago      105MB
+openjdk                                    8-alpine            6eb8392704ff        4 days ago          105MB
+mysql/mysql-server                         latest              18c55bf778f5        8 weeks ago         288MB
+mysql                                      latest              71b5c7e10f9b        2 months ago        477MB
+hello-world                                latest              fce289e99eb9        3 months ago        1.84kB
+ubuntu                                     latest              1d9c17228a9e        3 months ago        86.7MB
+k8s.gcr.io/kube-proxy-amd64                v1.10.11            7387003276ac        4 months ago        98.3MB
+k8s.gcr.io/kube-apiserver-amd64            v1.10.11            e851a7aeb6e8        4 months ago        228MB
+k8s.gcr.io/kube-controller-manager-amd64   v1.10.11            978cfa2028bf        4 months ago        151MB
+k8s.gcr.io/kube-scheduler-amd64            v1.10.11            d2c751d562c6        4 months ago        51.2MB
+docker/kube-compose-controller             v0.4.12             02a45592fbea        6 months ago        27.8MB
+docker/kube-compose-api-server             v0.4.12             0f92c77fa676        6 months ago        41.2MB
+k8s.gcr.io/etcd-amd64                      3.1.12              52920ad46f5b        12 months ago       193MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64     1.14.8              c2ce1ffb51ed        15 months ago       41MB
+k8s.gcr.io/k8s-dns-sidecar-amd64           1.14.8              6f7f2dc7fab5        15 months ago       42.2MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64          1.14.8              80cc5ea4b547        15 months ago       50.5MB
+k8s.gcr.io/pause-amd64                     3.1                 da86e6ba6ca1        15 months ago       742kB
+maven                                      3.3.9-jdk-8         9997d8483b2f        2 years ago         653MB
+prakhar1989/static-site                    latest              f01030e1dcf3        3 years ago         134MB
+Shivams-MacBook-Pro:receiver shivamshukla$ docker run -it rabbitsubscribe
+no main manifest attribute, in receiver-0.0.1-SNAPSHOT.jar
+Shivams-MacBook-Pro:receiver shivamshukla$ ls
+dockerfile	lib		pom.xml		src		target
+Shivams-MacBook-Pro:receiver shivamshukla$ cd target
+Shivams-MacBook-Pro:target shivamshukla$ ls
+archive-tmp						maven-status
+classes							receiver-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+generated-sources					receiver-0.0.1-SNAPSHOT.jar
+generated-test-sources					surefire-reports
+maven-archiver						test-classes
+Shivams-MacBook-Pro:target shivamshukla$ java -jar receiver-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+Hello World!
+Shivams-MacBook-Pro:target shivamshukla$ docker images
+REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
+rabbitsubscribe                            latest              a1e17c4da406        2 days ago          653MB
+rabbitpublish                              latest              c7bc04bad683        2 days ago          105MB
+openjdk                                    8-alpine            6eb8392704ff        6 days ago          105MB
+mysql/mysql-server                         latest              18c55bf778f5        2 months ago        288MB
+mysql                                      latest              71b5c7e10f9b        2 months ago        477MB
+hello-world                                latest              fce289e99eb9        3 months ago        1.84kB
+ubuntu                                     latest              1d9c17228a9e        3 months ago        86.7MB
+k8s.gcr.io/kube-proxy-amd64                v1.10.11            7387003276ac        4 months ago        98.3MB
+k8s.gcr.io/kube-apiserver-amd64            v1.10.11            e851a7aeb6e8        4 months ago        228MB
+k8s.gcr.io/kube-controller-manager-amd64   v1.10.11            978cfa2028bf        4 months ago        151MB
+k8s.gcr.io/kube-scheduler-amd64            v1.10.11            d2c751d562c6        4 months ago        51.2MB
+docker/kube-compose-controller             v0.4.12             02a45592fbea        6 months ago        27.8MB
+docker/kube-compose-api-server             v0.4.12             0f92c77fa676        6 months ago        41.2MB
+k8s.gcr.io/etcd-amd64                      3.1.12              52920ad46f5b        12 months ago       193MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64     1.14.8              c2ce1ffb51ed        15 months ago       41MB
+k8s.gcr.io/k8s-dns-sidecar-amd64           1.14.8              6f7f2dc7fab5        15 months ago       42.2MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64          1.14.8              80cc5ea4b547        15 months ago       50.5MB
+k8s.gcr.io/pause-amd64                     3.1                 da86e6ba6ca1        15 months ago       742kB
+maven                                      3.3.9-jdk-8         9997d8483b2f        2 years ago         653MB
+prakhar1989/static-site                    latest              f01030e1dcf3        3 years ago         134MB
+Shivams-MacBook-Pro:target shivamshukla$ docker rmi c7bc04bad683
+Error response from daemon: conflict: unable to delete c7bc04bad683 (must be forced) - image is being used by stopped container 9983c428028b
+Shivams-MacBook-Pro:target shivamshukla$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+Shivams-MacBook-Pro:target shivamshukla$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                     PORTS                 NAMES
+f486ea2a967c        rabbitsubscribe     "/usr/local/bin/mvn-…"   2 days ago          Exited (1) 2 days ago                            competent_cartwright
+9983c428028b        rabbitpublish       "java -jar rabbitmq-…"   2 days ago          Exited (1) 2 days ago                            jovial_cartwright
+8c2c1522526d        mysql:latest        "docker-entrypoint.s…"   8 weeks ago         Exited (255) 5 weeks ago   3306/tcp, 33060/tcp   shivam_sql
+Shivams-MacBook-Pro:target shivamshukla$ docker rm f486ea2a967c 9983c428028b 
+f486ea2a967c
+9983c428028b
+Shivams-MacBook-Pro:target shivamshukla$ docker rmi c7bc04bad683
+Untagged: rabbitpublish:latest
+Deleted: sha256:c7bc04bad683233948e12dc2498c4c3428c798fe4ff22605f3aa33900401e14d
+Deleted: sha256:2c065c614205395db703b6efcf77b8e3e0dc8f90f4632c1cc9f73eebe5b2a26c
+Deleted: sha256:58798ba3ea2df208c8216fd680cb37dab8f7a1ec2303fdc15172f5a8feab0b4f
+Deleted: sha256:7355dc89eea08800dae7215a82f9bdc9cde9eff5a77656887ee4173367dda55a
+Shivams-MacBook-Pro:target shivamshukla$ clear
+
+Shivams-MacBook-Pro:target shivamshukla$ pwd
+/Users/shivamshukla/Documents/WS/receiver/target
+Shivams-MacBook-Pro:target shivamshukla$ cd ../../
+Shivams-MacBook-Pro:WS shivamshukla$ ls
+message		rabbitmq	receiver	send
+Shivams-MacBook-Pro:WS shivamshukla$ cd /Users/shivamshukla/Documents/microservice/PublisherService/\
+> 
+Shivams-MacBook-Pro:PublisherService shivamshukla$ pwd
+/Users/shivamshukla/Documents/microservice/PublisherService
+Shivams-MacBook-Pro:PublisherService shivamshukla$ ls
+README.md		dockerfile		dockerfilebackup	lib			pom.xml			src			target
+Shivams-MacBook-Pro:PublisherService shivamshukla$ history
+   45  kubectl get services
+   46  kubectl get pods -n defauly
+   47  kubectl get pods -n defaul
+   48  kubectl get pods -n default
+   49  kubectl apply -f <(istioctl kube-inject -f bookinfo.yaml)
+   50  kubectl apply -f <(kube-inject -f bookinfo.yaml)
+   51  kubectl apply -f <(istioctl kube-inject -f bookinfo.yaml) -n default
+   52  kubectl apply -f <(kube-inject -f bookinfo.yaml) -n default
+   53  kubectl get pods -n istio-system
+   54  kubectl get pods
+   55  pwd
+   56  ls
+   57  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+   58  kubectl apply -f <( kube-inject -f bookinfo.yaml)
+   59  kubectl apply -f <(istioctl kube-inject -f bookinfo.yaml)
+   60  kubectl apply -f <(istioctl kube-inject -f bookinfo.yaml) -n default
+   61  istioctl
+   62  curl -L https://git.io/getLatestIstio | sh -
+   63  export PATH="$PATH:./istio-0.7.1/bin"
+   64  kubectl apply -f install/kubernetes/istio-auth.yaml
+   65  ls
+   66  cd ..
+   67  cd ..
+   68  cd ..
+   69  ls
+   70  cd ..
+   71  ls
+   72  cd install
+   73  ls
+   74  cd kubernetes
+   75  ls
+   76  kubectl apply -f istio-demo-auth.yaml
+   77  kubectl apply -f <(istioctl kube-inject -f bookinfo.yaml) -n default
+   78  cd ..
+   79  ls
+   80  cd ..
+   81  ls
+   82  cd ..
+   83  ls
+   84  cd instio-1.0.5
+   85  cd istio-1.0.5
+   86  ls
+   87  cd samples/
+   88  ls
+   89  cd bookinfo/
+   90  ls
+   91  cd platform
+   92  ls
+   93  cd kube/
+   94  ls
+   95  kubectl apply -f <(istioctl kube-inject -f bookinfo.yaml) -n default
+   96  istioctl
+   97  kubectl get svc -n istio-system
+   98  kubectl get pods -n istio-system
+   99  kubectl create -f <(istioctl kube-inject -f bookinfo.yaml) -n default
+  100  kubectl create -f <(istioctl kube-inject -f bookinfo.yaml)
+  101  pwd
+  102  cd../..
+  103  cd ..|..
+  104  ls
+  105  cd ..
+  106  ls
+  107  cd ..
+  108  ls
+  109  cd networking
+  110  ls
+  111  kubectl apply -f bookinfo-gateway.yaml
+  112  kubectl get gateway
+  113  export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}'
+  114  )
+  115  export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+  116  export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+  117  export INGRESS_HOST=$(minikube ip)
+  118  export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+  119  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  120  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  121  kubectl get pods 
+  122  istioctl
+  123  cd ..
+  124  cd ..
+  125  cd ..
+  126  cd ..
+  127  ls
+  128  kubectl apply -f install/kubernetes/istio-auth.yaml
+  129  ls
+  130  cd istio-1.0.5/
+  131  ls
+  132  kubectl apply -f install/kubernetes/istio-auth.yaml
+  133  cd install
+  134  ls
+  135  cd kubernetes/
+  136  ls
+  137  kubectl apply -f istio-demo-auth.yaml
+  138  kubectl get svc -n istio-system
+  139  kubectl get pods -n istio-system
+  140  istioctl
+  141  ls
+  142  cd ..
+  143  cd ..
+  144  istioctl
+  145  cd ..
+  146  curl -L https://git.io/getLatestIstio | sh -
+  147  cd istio-1.0.5/
+  148  export PATH=$PWD/bin:$PATH
+  149  istioctl version
+  150  ls
+  151  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  152  kubectl get pods
+  153  export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+  154  export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
+  155  export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].port}')
+  156  export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+  157  export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+  158  export INGRESS_HOST=$(minikube ip)
+  159  cd ..
+  160  ls
+  161  cd istio-1.0.5/
+  162  ls
+  163  cd samples
+  164  ls
+  165  cs bookinfo/
+  166  cd bookinfo/
+  167  ls
+  168  cd networking/
+  169  ls
+  170  kubectl apply -f bookinfo-gateway.yaml
+  171  kubectl get gateway
+  172  export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+  173  export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+  174  export INGRESS_HOST=$(minikube ip)
+  175  export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+  176  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  177  kubectl get pods
+  178  kubectl get svc
+  179  echo ${GATEWAY_URL}
+  180  kubectl logs
+  181  kubectl get svc
+  182  kubectl get svc
+  183  cd istio-1.0.5/
+  184  ls
+  185  cd samples
+  186  ls
+  187  cd bookinfo
+  188  ls
+  189  cd platform
+  190  ls
+  191  cd kube
+  192  ls
+  193  kubectl apply -f bookinfo-gateway.yaml
+  194  cd istio-1.0.5/
+  195  ls
+  196  cd samples/
+  197  ls
+  198  cd bookinfo/
+  199  ls
+  200  cd platform/
+  201  ls
+  202  cd kube/
+  203  ls
+  204  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  205  docker ps -a
+  206  $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+  207  docker run --name root -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0.14
+  208  docker rm 50ca22c782ee914cf78184bf2d660c9c55db9a7683ae740c42580b9078f4dbae
+  209  docker stop 50ca22c782ee914cf78184bf2d660c9c55db9a7683ae740c42580b9078f4dbae
+  210  docker rm 50ca22c782ee914cf78184bf2d660c9c55db9a7683ae740c42580b9078f4dbae
+  211  $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+  212  $ docker run --name root -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0.14
+  213  docker run --name root -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0.14
+  214  use test
+  215  docker use test
+  216  docker run --name root -e MYSQL_ROOT_PASSWORD=root -d mysql:latest
+  217  docker run --name root -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0.14
+  218  docker ps -a
+  219  docker
+  220  docker stats
+  221  docker
+  222  docker run --help
+  223  docker images
+  224  $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+  225  $ docker run --name mysqll -e MYSQL_ROOT_PASSWORD=root  -d mysql:8.0.14
+  226  docker run --name mysql -e MYSQL_ROOT_PASSWORD=root  -d mysql:8.0.14
+  227  docker ps -a
+  228  docker exec -it MyContainer mysql -uroot -pMyPassword
+  229  docker exec
+  230  docker help
+  231  docker exec --help
+  232  docker ps -a
+  233  docker exec -it mysql -u root -p root
+  234  docker exec -it mysql -u root -p rootdocker exec -it mysql bash
+  235  docker exec -it mysql -u root -p rootdocker exec -it mysql
+  236  docker-entrypoint.sh
+  237  docker exec -it mysql01 mysql -uroot -p
+  238  docker exec -it mysql mysql -uroot -p
+  239  docker
+  240  clear
+  241  docker images
+  242  dokcer ps -a
+  243  docker ps -a
+  244  docker conatiner prune
+  245  docker container prune
+  246  docker ps -a
+  247  docker 
+  248  docker images
+  249  docker rmi mysql
+  250  docker rmi mysql:8.0.14
+  251  docker ps -a
+  252  docker stop 60a251588937
+  253  docker rmi mysql:8.0.14
+  254  docker rmi 71b5c7e10f9b
+  255  docker container prune
+  256  docker ps -a
+  257  docker rmi 71b5c7e10f9b
+  258  docker images
+  259  clear
+  260  docker pull mysql
+  261  $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+  262  docker images
+  263  docker run --name shivam_sql -e MYSQL_ROOT_PASSWORD=shivam -d mysql:latest
+  264  $ docker exec -it some-mysql bash
+  265  docker exec -it shivam_sql bash
+  266  docker images
+  267  docker
+  268  docker run --name=mysql01 -d mysql/mysql-server:latest
+  269  docker images
+  270  docker run --name=mysql01 -d mysql/mysql-server:latest
+  271  docker images
+  272  docker run --name=mysql1 -d mysql:latest
+  273  docker ps -a
+  274  docker stop 35f4a8747f09
+  275  docker container prune
+  276  docker ps -a
+  277  docker exec -it mysql01 mysql -uroot -p
+  278  docker exec -it mysql1 mysql -uroot -p
+  279  docker exec -it shivam_sql mysql -uroot -p
+  280  docker exec -it shivam_sql mysql -uroot -p
+  281  kubectl get services -n istio-system
+  282  minikube service jaeger-query --url
+  283  minikube service jaeger-query --10.103.168.75
+  284  minikube service jaeger-query 10.103.168.75
+  285  kubectl port-forward jaeger-query 16686:16686 -n istio-system
+  286  minikube ip
+  287  minikube start
+  288  minikube ip
+  289  kubectl get pods
+  290  kubectl get services -n istio-system
+  291  kubectl port-forward jaeger-query 16686:16686 -n istio-system
+  292  kubectl port-forward jaeger-query 16686:16686 -n istio-systemcd ..
+  293  cd ..
+  294  cd ./.
+  295  cd ..
+  296  cd ..
+  297  kubectl port-forward jaeger-query 16686:16686 -n istio-system
+  298  kubectl port-forward jaeger-query 16686:16686
+  299  kubectl port-forward service/jaeger-query 16686:16686
+  300  kubectl port-forward svc/jaeger-query 16686:16686
+  301  kubectl port-forward svc/jaeger-query 16686:16686 -n istio-system
+  302  kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+  303  kubectl apply -f samples/bookinfo/networking/destination-rule-all.yaml
+  304  minikube ip
+  305  kubectl delete -f samples/bookinfo/networking/destination-rule-all.yaml
+  306  kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+  307  kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml -n default
+  308  kubectl get virtualservices -o yaml
+  309  kubectl get destinationrules -o yaml
+  310  kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+  311  minikube ip
+  312  kuibectl port-forward service/grafana 3000:3000 -n istio-system
+  313  kubectl port-forward service/grafana 3000:3000 -n istio-system
+  314  cd istio-1.0.5/
+  315  cd samples/bookinfo/
+  316  ls
+  317  cd networking/
+  318  vi bookinfo-gateway.yaml 
+  319  vi tryout.yaml 
+  320  kuibectl port-forward service/grafana 3000:3000 -n istio-system
+  321  kubectl port-forward service/grafana 3000:3000 -n istio-system
+  322  kubectl port-forward service/grafana 3000:3000 -n istio-system
+  323  kubectl port-forward service/grafana 3000:3000 -n istio-system
+  324  kubectl port-forward service/grafana 3000:3000 -n istio-system
+  325  kubectl port-forward service/grafana 3000:3000 -n istio-system
+  326  kubectl port-forward service/grafana 3000:3000 -n istio-system
+  327     git clone https://github.com/IBM/sample.microservices.web-app.git
+  328  ls
+  329  cd sample.microservices.web-app/
+  330  ls
+  331  open .
+  332  minikube start
+  333  kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+  334  cd istio-1.0.6/
+  335  kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+  336  export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+  337  export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+  338  export INGRESS_HOST=$(minikube ip)
+  339  export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+  340  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  341  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  342  kubectl get pods
+  343  kubectl get gateway
+  344  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  345  kubectl get virtualservices
+  346  kubectl delete virtualservices details productpage ratings reviews
+  347  kubectl get destinationrules
+  348  kubectl describe destinationrule details
+  349  kubectl describe destinationrule reviews
+  350  kubectl describe destinationrule ratings
+  351  kubectl describe destinationrule productpage
+  352  kubectl get serviceaccounts
+  353  kubectl delete servicerole --all
+  354  kubectl delete servicerolebinding --all
+  355  kubectl get serviceaccounts
+  356  kubectl get serviceaccounts
+  357  kubectl delete serviceaccounts bookinfo-productpage bookinfo-reviews
+  358  kubectl get serviceaccounts
+  359  kubectl get destinationrules
+  360  kubectl get virtualservices
+  361  kubectl get meshpolicy
+  362  clear
+  363  clear
+  364  minikube ip
+  365  kubectl get destinationrules
+  366  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  367  cd ..
+  368  ls
+  369  cd istio-1.0.6/
+  370  ls
+  371  cd bin/
+  372  ls
+  373  cd ..
+  374  cd ..
+  375  curl -L https://git.io/getLatestIstio | sh -
+  376  cd istio-1.0.6/
+  377  export PATH="$PATH:./istio-1.0.6/bin"
+  378  istioctl version
+  379  export PATH="$PATH:./bin"
+  380  istioctl version
+  381  ls install/kubernetes/
+  382  kubectl apply -f install/kubernetes/istio-demo-auth.yaml
+  383  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  384  kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+  385  export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+  386  export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+  387  export INGRESS_HOST=$(minikube ip)
+  388  export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+  389  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  390  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  391  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  392  minikube ip
+  393  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  394  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  395  curl -o /dev/null -s -w "%{http_code}\n" http://${GATEWAY_URL}/productpage
+  396  minikube start
+  397  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  398  kubectl get services
+  399  kubectl get pods
+  400  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  401  kubectl get pods
+  402  cd ..
+  403  curl -L https://git.io/getLatestIstio | sh -
+  404  export PATH="$PATH:/Users/shivamshukla/istio-1.0.6/bin"
+  405  istioctl version
+  406  kubectl apply -f install/kubernetes/
+  407  cd istio-1.0.6/
+  408  kubectl apply -f install/kubernetes/istio-demo-auth.yaml
+  409  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  410  cd ..
+  411  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  412  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  413  kubectl apply -f <(istioctl kube-inject -f istio-1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml)
+  414  kubectl get services
+  415  kubectl get pods
+  416  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  417  kubectl apply -f <(istioctl kube-inject -f istio-1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml)
+  418  kubectl get pods
+  419  kubectl get pods
+  420  kubectl get pods
+  421  brew cask install minikube
+  422  brew cask reinstall minikube
+  423  minikube start
+  424  curl -L https://git.io/getLatestIstio | sh -
+  425  export PATH="$PATH:/Users/shivamshukla/istio-1.0.6/bin"
+  426  istioctl version
+  427  cd istio-1.0.6/
+  428  kubectl apply -f install/kubernetes/istio-demo-auth.yaml
+  429  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  430  cd..
+  431  cd ..
+  432  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo.yaml)
+  433  kubectl apply -f <(istioctl kube-inject -f istio-1.0.6/samples/bookinfo/platform/kube/bookinfo.yaml)
+  434  kubectl get services
+  435  kubectl get pods
+  436  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml)
+  437  kubectl apply -f <(istioctl kube-inject -f istio-1.0.6/samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml)
+  438  kubectl get pods
+  439  kubectl get pods
+  440  kubectl get pods
+  441  kubectl get virtualservices
+  442  kubectl get destinationrules
+  443  ls istio-1.0.6/samples/bookinfo/networking/
+  444  kubectl apply -f virtual-service-reviews-v2-v3.yaml
+  445  kubectl apply -f istio-1.0.6/samples/bookinfo/networking/virtual-service-reviews-v2-v3.yaml
+  446  kubectl delete -f istio-1.0.6/samples/bookinfo/networking/virtual-service-reviews-v2-v3.yaml
+  447  cd istio-1.0.6/
+  448  kubectl get serviceaccount
+  449  vi samples/bookinfo/networking/virtual-service-reviews-v2-v3.yaml
+  450  kubectl apply -f istio-1.0.6/samples/bookinfo/networking/virtual-service-reviews-v2-v3.yaml
+  451  kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-v2-v3.yaml
+  452  vi samples/bookinfo/networking/virtual-service-reviews-80-20.yaml
+  453  kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-80-20.yaml
+  454  vi samples/bookinfo/networking/destination-rule-all-mtls.yaml
+  455  kubectl delete -f  samples/bookinfo/networking/destination-rule-all-mtls.yaml
+  456  kubectl apply -f  samples/bookinfo/networking/destination-rule-all-mtls.yaml
+  457  vi samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml
+  458  vi samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yamlkubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml)
+  459  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml)
+  460  cd ..
+  461  kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml)
+  462  kubectl apply -f <(istioctl kube-inject -f istio-1.0.6/samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml)
+  463  kubectl delete authorization requestcontext -n istio-system
+  464  kubectl delete rbac handler -n istio-system
+  465  kubectl delete rule rbaccheck -n istio-system
+  466  kubectl delete servicerole --all
+  467  kubectl delete servicerolebinding --all
+  468  vi istio-1.0.6/samples/bookinfo/platform/kube/rbac/rbac-config-ON.yaml
+  469  kubectl apply -f istio-1.0.6/samples/bookinfo/platform/kube/rbac/rbac-config-ON.yaml
+  470  kubectl apply -f istio-1.0.6/samples/bookinfo/platform/kube/rbac/namespace-policy.yaml
+  471  cd istio-1.0.6/
+  472  kubectl delete -f samples/bookinfo/platform/kube/rbac/namespace-policy.yaml
+  473  kubectl apply -f samples/bookinfo/platform/kube/rbac/productpage-pokubectl apply -f samples/bookinfo/platform/kube/rbac/details-reviews-policy.yamllicy.yaml
+  474  kubectl apply -f samples/bookinfo/platform/kube/rbac/details-reviews-policy.yaml
+  475  kubectl apply -f samples/bookinfo/platform/kube/rbac/ratings-policy.yaml
+  476  javac
+  477  javac
+  478  ls
+  479  cd Desktop/tomcat
+  480  ls
+  481  cd apache-tomcat-8.5.38/
+  482  ls
+  483  cd bin
+  484  ls
+  485  ls -al *.sh
+  486  chmod +x *.sh
+  487  ls -al *.sh
+  488  ./startup.sh
+  489  which java
+  490  java version
+  491  java -version
+  492  vi ~/.bash_profile
+  493  brew update
+  494  brew update
+  495  brew 
+  496  brew update
+  497  brew install rabbitmq
+  498  rabbitmq-server
+  499  brew services rabbitmq
+  500  brew services start rabbitmq
+  501  cd Desktop
+  502  cd ..
+  503  cd Documents
+  504  ls
+  505  cd WS
+  506  ls
+  507  cd rabbitmq
+  508  ls
+  509  docker build -t rabbitpublish
+  510  docker build -t rabbitpublish .
+  511  docker images
+  512  docker run -it rabbitpublish
+  513  pwd
+  514  ls
+  515  cd target
+  516  ls
+  517  java -jar rabbitmq-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+  518  pwd
+  519  cd ..
+  520  cd ..
+  521  ls
+  522  cd receiver
+  523  docker build -t rabbitsubscribe .
+  524  docker build -t rabbitsubscribe .
+  525  docker images
+  526  docker run -it rabbitsubscribe
+  527  ls
+  528  cd target
+  529  ls
+  530  java -jar receiver-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+  531  docker images
+  532  docker rmi c7bc04bad683
+  533  docker ps
+  534  docker ps -a
+  535  docker rm f486ea2a967c 9983c428028b 
+  536  docker rmi c7bc04bad683
+  537  clear
+  538  pwd
+  539  cd ../../
+  540  ls
+  541  cd /Users/shivamshukla/Documents/microservice/PublisherService/\
+  542  pwd
+  543  ls
+  544  history
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker build -t PublisherService
+invalid argument "PublisherService" for "-t, --tag" flag: invalid reference format: repository name must be lowercase
+See 'docker build --help'.
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker build -t PublisherService .
+invalid argument "PublisherService" for "-t, --tag" flag: invalid reference format: repository name must be lowercase
+See 'docker build --help'.
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker build -t publisherservice .
+Sending build context to Docker daemon  7.688MB
+Step 1/4 : FROM maven:3.3.9-jdk-8
+ ---> 9997d8483b2f
+Step 2/4 : EXPOSE 9999
+ ---> Using cache
+ ---> 5ad1958f96ba
+Step 3/4 : ADD /target/PublisherService-1.0.0-jar-with-dependencies.jar PublisherService-1.0.0-jar-with-dependencies.jar
+ ---> d52c8b1c2f67
+Step 4/4 : CMD ["java","-jar","PublisherService-1.0.0-jar-with-dependencies.jar"]
+ ---> Running in d4c7c0eeadc9
+Removing intermediate container d4c7c0eeadc9
+ ---> 1b073734e7b4
+Successfully built 1b073734e7b4
+Successfully tagged publisherservice:latest
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker images
+REPOSITORY                                 TAG                 IMAGE ID            CREATED             SIZE
+publisherservice                           latest              1b073734e7b4        3 seconds ago       659MB
+rabbitsubscribe                            latest              a1e17c4da406        2 days ago          653MB
+openjdk                                    8-alpine            6eb8392704ff        6 days ago          105MB
+mysql/mysql-server                         latest              18c55bf778f5        2 months ago        288MB
+mysql                                      latest              71b5c7e10f9b        2 months ago        477MB
+hello-world                                latest              fce289e99eb9        3 months ago        1.84kB
+ubuntu                                     latest              1d9c17228a9e        3 months ago        86.7MB
+k8s.gcr.io/kube-proxy-amd64                v1.10.11            7387003276ac        4 months ago        98.3MB
+k8s.gcr.io/kube-apiserver-amd64            v1.10.11            e851a7aeb6e8        4 months ago        228MB
+k8s.gcr.io/kube-controller-manager-amd64   v1.10.11            978cfa2028bf        4 months ago        151MB
+k8s.gcr.io/kube-scheduler-amd64            v1.10.11            d2c751d562c6        4 months ago        51.2MB
+docker/kube-compose-controller             v0.4.12             02a45592fbea        6 months ago        27.8MB
+docker/kube-compose-api-server             v0.4.12             0f92c77fa676        6 months ago        41.2MB
+k8s.gcr.io/etcd-amd64                      3.1.12              52920ad46f5b        12 months ago       193MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64     1.14.8              c2ce1ffb51ed        15 months ago       41MB
+k8s.gcr.io/k8s-dns-sidecar-amd64           1.14.8              6f7f2dc7fab5        15 months ago       42.2MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64          1.14.8              80cc5ea4b547        15 months ago       50.5MB
+k8s.gcr.io/pause-amd64                     3.1                 da86e6ba6ca1        15 months ago       742kB
+maven                                      3.3.9-jdk-8         9997d8483b2f        2 years ago         653MB
+prakhar1989/static-site                    latest              f01030e1dcf3        3 years ago         134MB
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker run -it publisherservice
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+^CShivams-MacBook-Pro:PublisherService shivamshukla$ docker run -p 9999:9999 publisherservice
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+java.net.ConnectException: Connection refused (Connection refused)
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:60)
+	at com.rabbitmq.client.impl.recovery.RecoveryAwareAMQConnectionFactory.newConnection(RecoveryAwareAMQConnectionFactory.java:62)
+	at com.rabbitmq.client.impl.recovery.AutorecoveringConnection.init(AutorecoveringConnection.java:156)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1106)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1063)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1021)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1182)
+	at com.ibm.mdm.sample.rest.Publisher.publishMessage(Publisher.java:15)
+	at com.ibm.mdm.sample.rest.RestServer.publishMessage(RestServer.java:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory$1.invoke(ResourceMethodInvocationHandlerFactory.java:81)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:164)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:181)
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$TypeOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:203)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:101)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:389)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:347)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:102)
+	at org.glassfish.jersey.server.ServerRuntime$2.run(ServerRuntime.java:305)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:271)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:267)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:267)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:317)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:288)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:1110)
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:401)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:386)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:335)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:222)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:800)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:587)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1125)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:515)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1059)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:97)
+	at org.eclipse.jetty.server.Server.handle(Server.java:497)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:310)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:248)
+	at org.eclipse.jetty.io.AbstractConnection$2.run(AbstractConnection.java:540)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:620)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:540)
+	at java.lang.Thread.run(Thread.java:745)
+java.net.ConnectException: Connection refused (Connection refused)
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at com.rabbitmq.client.impl.SocketFrameHandlerFactory.create(SocketFrameHandlerFactory.java:60)
+	at com.rabbitmq.client.impl.recovery.RecoveryAwareAMQConnectionFactory.newConnection(RecoveryAwareAMQConnectionFactory.java:62)
+	at com.rabbitmq.client.impl.recovery.AutorecoveringConnection.init(AutorecoveringConnection.java:156)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1106)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1063)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1021)
+	at com.rabbitmq.client.ConnectionFactory.newConnection(ConnectionFactory.java:1182)
+	at com.ibm.mdm.sample.rest.Publisher.publishMessage(Publisher.java:15)
+	at com.ibm.mdm.sample.rest.RestServer.publishMessage(RestServer.java:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory$1.invoke(ResourceMethodInvocationHandlerFactory.java:81)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:164)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:181)
+	at org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$TypeOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:203)
+	at org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:101)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:389)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:347)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:102)
+	at org.glassfish.jersey.server.ServerRuntime$2.run(ServerRuntime.java:305)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:271)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:267)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:267)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:317)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:288)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:1110)
+	at org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:401)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:386)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:335)
+	at org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:222)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:800)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:587)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1125)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:515)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1059)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:97)
+	at org.eclipse.jetty.server.Server.handle(Server.java:497)
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:310)
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:248)
+	at org.eclipse.jetty.io.AbstractConnection$2.run(AbstractConnection.java:540)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:620)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:540)
+	at java.lang.Thread.run(Thread.java:745)
+x	^CShivams-MacBook-Pro:PublisherService shivamshukla$ 
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                       PORTS                 NAMES
+74d475198c32        publisherservice    "/usr/local/bin/mvn-…"   5 minutes ago       Exited (130) 8 seconds ago                         determined_cohen
+665dfa28f07e        publisherservice    "/usr/local/bin/mvn-…"   6 minutes ago       Exited (130) 5 minutes ago                         jovial_kilby
+8c2c1522526d        mysql:latest        "docker-entrypoint.s…"   8 weeks ago         Exited (255) 5 weeks ago     3306/tcp, 33060/tcp   shivam_sql
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker start -itd 74d475198c32
+unknown shorthand flag: 't' in -td
+See 'docker start --help'.
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker run -itd -p 9999:9999 publisherservice
+b0d892c49459a676dd1571330ccc0faff101da2437589e1f1bc008645374bb3e
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+b0d892c49459        publisherservice    "/usr/local/bin/mvn-…"   4 seconds ago       Up 2 seconds        0.0.0.0:9999->9999/tcp   adoring_cray
+Shivams-MacBook-Pro:PublisherService shivamshukla$ docker exec -it b0d892c49459 /bin/bash
+root@b0d892c49459:/# ls
+PublisherService-1.0.0-jar-with-dependencies.jar  bin  boot  dev  etc  home  lib  lib64  media	mnt  opt  proc	root  run  sbin  srv  sys  tmp	usr  var
+root@b0d892c49459:/# vi /etc/hosts
+bash: vi: command not found
+root@b0d892c49459:/# cat /etc/hosts
+127.0.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+fe00::0	ip6-localnet
+ff00::0	ip6-mcastprefix
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+172.17.0.2	b0d892c49459
+root@b0d892c49459:/# exit
+exit
+Shivams-MacBook-Pro:PublisherService shivamshukla$ 
