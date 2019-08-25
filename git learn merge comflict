@@ -1,0 +1,326 @@
+shivam@shivam-Inspiron-3558:~/Desktop$ cd learn_git
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ clear
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git clone https://github.com/shvmshukla/technical_articles.git
+Cloning into 'technical_articles'...
+remote: Enumerating objects: 185, done.
+remote: Total 185 (delta 0), reused 0 (delta 0), pack-reused 185
+Receiving objects: 100% (185/185), 19.13 MiB | 134.00 KiB/s, done.
+Resolving deltas: 100% (48/48), done.
+Checking connectivity... done.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git init
+Initialized empty Git repository in /home/shivam/Desktop/learn_git/.git/
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch -a
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ cd ..
+shivam@shivam-Inspiron-3558:~/Desktop$ pwd
+/home/shivam/Desktop
+shivam@shivam-Inspiron-3558:~/Desktop$ cd learn_git
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git init
+Initialized empty Git repository in /home/shivam/Desktop/learn_git/.git/
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git pull https://github.com/shvmshukla/technical_articles.git
+remote: Enumerating objects: 185, done.
+remote: Total 185 (delta 0), reused 0 (delta 0), pack-reused 185
+Receiving objects: 100% (185/185), 19.13 MiB | 631.00 KiB/s, done.
+Resolving deltas: 100% (48/48), done.
+From https://github.com/shvmshukla/technical_articles
+ * branch            HEAD       -> FETCH_HEAD
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+* master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch intruder
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+  intruder
+* master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git checkout intruder 
+Switched to branch 'intruder'
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+* intruder
+  master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git status
+On branch intruder
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md
+	modified:   README.md~
+
+no changes added to commit (use "git add" and/or "git commit -a")
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ gid add .
+The program 'gid' is currently not installed. You can install it by typing:
+sudo apt-get install id-utils
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git add .
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git status
+On branch intruder
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   README.md
+	modified:   README.md~
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git commit -m "intruder added comment"
+[intruder 172b01c] intruder added comment
+ 2 files changed, 3 insertions(+)
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push
+fatal: No configured push destination.
+Either specify the URL from the command-line or configure a remote repository using
+
+    git remote add <name> <url>
+
+and then push using the remote name
+
+    git push <name>
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push intruder
+fatal: The current branch intruder has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream intruder intruder
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push intruder
+fatal: The current branch intruder has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream intruder intruder
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git checkout master
+Switched to branch 'master'
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git merge intruder
+Updating 3a35814..172b01c
+Fast-forward
+ README.md  | 2 ++
+ README.md~ | 1 +
+ 2 files changed, 3 insertions(+)
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ gedit README.md
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ gedit README.md~
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git checkout
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+  intruder
+* master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git checkout intruder
+Switched to branch 'intruder'
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push intruder
+fatal: The current branch intruder has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream intruder intruder
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ ^C
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push --set-upstream intruder intruder
+fatal: 'intruder' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push
+fatal: No configured push destination.
+Either specify the URL from the command-line or configure a remote repository using
+
+    git remote add <name> <url>
+
+and then push using the remote name
+
+    git push <name>
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git checkout master
+Switched to branch 'master'
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git merge intruder
+Already up-to-date.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+  intruder
+* master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push
+fatal: No configured push destination.
+Either specify the URL from the command-line or configure a remote repository using
+
+    git remote add <name> <url>
+
+and then push using the remote name
+
+    git push <name>
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push origin master
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push origin intruder
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ cd ..
+shivam@shivam-Inspiron-3558:~/Desktop$ cd git_tuto/
+shivam@shivam-Inspiron-3558:~/Desktop/git_tuto$ git clone https://github.com/shvmshukla/technical_articles.git
+Cloning into 'technical_articles'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 188 (delta 0), reused 0 (delta 0), pack-reused 185
+Receiving objects: 100% (188/188), 19.13 MiB | 667.00 KiB/s, done.
+Resolving deltas: 100% (48/48), done.
+Checking connectivity... done.
+shivam@shivam-Inspiron-3558:~/Desktop/git_tuto$ git init
+Initialized empty Git repository in /home/shivam/Desktop/git_tuto/.git/
+shivam@shivam-Inspiron-3558:~/Desktop/git_tuto$ git branch
+shivam@shivam-Inspiron-3558:~/Desktop/git_tuto$ cd ..
+shivam@shivam-Inspiron-3558:~/Desktop$ cd learn_git
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+  intruder
+* master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git checkout intruder
+Switched to branch 'intruder'
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git status
+On branch intruder
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md
+	modified:   README.md~
+
+no changes added to commit (use "git add" and/or "git commit -a")
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git add .
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git status
+On branch intruder
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   README.md
+	modified:   README.md~
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git commit -m "second commit"
+[intruder 5857353] second commit
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+* intruder
+  master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git checkout master
+Switched to branch 'master'
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ gedit README.md
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git merge intruder
+Updating 172b01c..5857353
+Fast-forward
+ README.md  | 4 +++-
+ README.md~ | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ gedit README.md
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ gedit README.md~
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push origin master
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push origin/master
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin/master master
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push --set-upstream origin/master master
+fatal: 'origin/master' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push origin intruder
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push master intruder
+fatal: 'master' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git checkout
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git branch
+  intruder
+* master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git remote add origin https://github.com/shvmshukla/technical_articles.git
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git remote
+origin
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push origin master
+Username for 'https://github.com': shvmshukla37@gmail.com                   
+Password for 'https://shvmshukla37@gmail.com@github.com': 
+To https://github.com/shvmshukla/technical_articles.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/shvmshukla/technical_articles.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git pull
+remote: Enumerating objects: 6, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 6 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (6/6), done.
+From https://github.com/shvmshukla/technical_articles
+ * [new branch]      master     -> origin/master
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git pull origin master
+From https://github.com/shvmshukla/technical_articles
+ * branch            master     -> FETCH_HEAD
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ gedit README.md
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git status
+On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+	both modified:      README.md
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md~
+
+no changes added to commit (use "git add" and/or "git commit -a")
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git add .
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git status
+On branch master
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+
+	modified:   README.md
+	modified:   README.md~
+
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git commit -m "merge conflict resolved"
+[master 1fda837] merge conflict resolved
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ git push origin master
+Username for 'https://github.com': shvmshukla37@gmail.com
+Password for 'https://shvmshukla37@gmail.com@github.com': 
+Counting objects: 14, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 1004 bytes | 0 bytes/s, done.
+Total 9 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 2 local objects.
+To https://github.com/shvmshukla/technical_articles.git
+   0d63069..1fda837  master -> master
+shivam@shivam-Inspiron-3558:~/Desktop/learn_git$ 
+
